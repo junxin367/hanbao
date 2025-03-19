@@ -1,0 +1,166 @@
+{
+  "ver": "2.3.8",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91",
+  "files": [],
+  "subMetas": {
+    "44265": {
+      "importer": "gltf-scene",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@44265",
+      "displayName": "",
+      "id": "44265",
+      "name": "BoostArea_PlayerCapacity.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "99d6c": {
+      "importer": "gltf-mesh",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@99d6c",
+      "displayName": "",
+      "id": "99d6c",
+      "name": "Scene-0.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 668
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6ec10": {
+      "importer": "gltf-mesh",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@6ec10",
+      "displayName": "",
+      "id": "6ec10",
+      "name": "Scene-1.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 668
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "fd73d": {
+      "importer": "gltf-embeded-image",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@fd73d",
+      "displayName": "",
+      "id": "fd73d",
+      "name": "DiffuseColor_Texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "4f17a": {
+      "importer": "texture",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@4f17a",
+      "displayName": "",
+      "id": "4f17a",
+      "name": "DiffuseColor_Texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "7aa4e8f3-1773-404d-bf7b-420cf607af91@fd73d"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "09013": {
+      "importer": "gltf-material",
+      "uuid": "7aa4e8f3-1773-404d-bf7b-420cf607af91@09013",
+      "displayName": "",
+      "id": "09013",
+      "name": "main_color.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "DiffuseColor_Texture",
+        "uri": "7aa4e8f3-1773-404d-bf7b-420cf607af91@fd73d"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "7aa4e8f3-1773-404d-bf7b-420cf607af91@44265",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "7aa4e8f3-1773-404d-bf7b-420cf607af91@99d6c",
+        "7aa4e8f3-1773-404d-bf7b-420cf607af91@6ec10"
+      ],
+      "skeletons": [],
+      "textures": [
+        "7aa4e8f3-1773-404d-bf7b-420cf607af91@4f17a"
+      ],
+      "materials": [
+        "7aa4e8f3-1773-404d-bf7b-420cf607af91@09013"
+      ],
+      "scenes": [
+        "7aa4e8f3-1773-404d-bf7b-420cf607af91@44265"
+      ]
+    }
+  }
+}

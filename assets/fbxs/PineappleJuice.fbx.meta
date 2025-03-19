@@ -1,0 +1,147 @@
+{
+  "ver": "2.3.8",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff",
+  "files": [],
+  "subMetas": {
+    "a62fe": {
+      "importer": "gltf-mesh",
+      "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff@a62fe",
+      "displayName": "",
+      "id": "a62fe",
+      "name": "Scene.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 268
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "fd73d": {
+      "importer": "gltf-embeded-image",
+      "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff@fd73d",
+      "displayName": "",
+      "id": "fd73d",
+      "name": "DiffuseColor_Texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "4f17a": {
+      "importer": "texture",
+      "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff@4f17a",
+      "displayName": "",
+      "id": "4f17a",
+      "name": "DiffuseColor_Texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "590c476e-25f4-4980-b81d-1fa18a663cff@fd73d"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "09013": {
+      "importer": "gltf-material",
+      "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff@09013",
+      "displayName": "",
+      "id": "09013",
+      "name": "main_color.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8cda9": {
+      "importer": "gltf-scene",
+      "uuid": "590c476e-25f4-4980-b81d-1fa18a663cff@8cda9",
+      "displayName": "",
+      "id": "8cda9",
+      "name": "PineappleJuice.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "DiffuseColor_Texture",
+        "uri": "590c476e-25f4-4980-b81d-1fa18a663cff@fd73d"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "590c476e-25f4-4980-b81d-1fa18a663cff@8cda9",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "590c476e-25f4-4980-b81d-1fa18a663cff@a62fe"
+      ],
+      "skeletons": [],
+      "textures": [
+        "590c476e-25f4-4980-b81d-1fa18a663cff@4f17a"
+      ],
+      "materials": [
+        "590c476e-25f4-4980-b81d-1fa18a663cff@09013"
+      ],
+      "scenes": [
+        "590c476e-25f4-4980-b81d-1fa18a663cff@8cda9"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "ver": "1.2.0",
+  "importer": "directory",
+  "imported": true,
+  "uuid": "e2e81e3f-6dd3-42b9-8048-def48348cd06",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "isBundle": true,
+    "bundleFilterConfig": [
+      {
+        "range": "include",
+        "type": "url",
+        "patchOption": {
+          "patchType": "glob",
+          "value": "db://assets/prefabs/**/*"
+        },
+        "assets": [
+          ""
+        ]
+      }
+    ],
+    "priority": 2
+  }
+}

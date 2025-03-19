@@ -1,0 +1,20 @@
+{
+  "ver": "4.0.23",
+  "importer": "javascript",
+  "imported": true,
+  "uuid": "f613d080-e307-4689-bdcc-fc88bcc90ddc",
+  "files": [
+    ".js"
+  ],
+  "subMetas": {},
+  "userData": {
+    "simulateGlobals": [
+      "ClipperLib"
+    ],
+    "isPlugin": true,
+    "loadPluginInWeb": true,
+    "loadPluginInNative": true,
+    "loadPluginInEditor": true,
+    "executionScope": "enclosed"
+  }
+}
