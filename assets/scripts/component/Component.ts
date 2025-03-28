@@ -123,11 +123,11 @@ export default class BaseComponent extends Component {
     setSpriteUrl(sp: Sprite, iconUrl: string) {
         assetManager.loadRemote(iconUrl, function (err, spframe: SpriteFrame) {
             if (err) return;
-            // const spriteFrame = new SpriteFrame();
-            // spriteFrame.setTexture(texture);
-            // const picTexture = new Texture2D();
-            // picTexture.image = texture;
-            // spriteFrame.texture = picTexture;
+
+
+
+
+
             sp.spriteFrame = spframe;
         });
     }

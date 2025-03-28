@@ -4,15 +4,15 @@ import { E_UILAYER } from "../common/GameConst";
 import WindowManager from "./WindowManager";
 
 export enum BUSY_TYPE {
-    NET,//网络
-    RES//加载资源
+    NET,
+    RES
 }
 export default class BusyLoadingManager {
     private static instance = null;
     private busyMap: Map<BUSY_TYPE, number> = new Map();
     private loadingUI: Node;
     private timerID: number = null
-    private delay: number = 300//延迟显示
+    private delay: number = 300
     constructor() {
 
     }

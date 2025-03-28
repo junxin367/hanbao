@@ -8,16 +8,16 @@ import WindowManager from '../../manager/WindowManager';
 import { GuideArrow } from './GuideArrow';
 import { GuideNode } from './GuideNode';
 
-// 引导步骤的接口
+
 interface GuideStep {
     message: string;
-    type: number //1=对话 2=播放聚焦大门动画
+    type: number 
     id: number
-    triggerNext: string //触发下一步骤的事件，本游戏不存在点击按钮那些，故用这个替代
-    target: string//目标节点名字
+    triggerNext: string 
+    target: string
     arrowOffset: Vec3
-    rollback: number //-1不回滚
-    focus: boolean//镜头是否聚焦一下
+    rollback: number 
+    focus: boolean
 }
 
 
@@ -29,7 +29,7 @@ export default class GuideManager extends Singleton {
 
     constructor() {
         super()
-        // 创建引导步骤数组
+
         const guideSteps: GuideStep[] = [
             { id: 1, message: '收取初始资金', type: 1, triggerNext: 'onGetInitMoneyComplete', target: 'initMoneyArea', arrowOffset: v3(0, 2, 0), rollback: -1, focus: false },
             { id: 2, message: '修建一个大门', type: 1, triggerNext: 'onCreateFacility1', target: 'DoorCreate', arrowOffset: v3(0, 1, 0), rollback: -1, focus: false },
@@ -66,7 +66,7 @@ export default class GuideManager extends Singleton {
         log('当前引导ID', this.currentGuideId)
     }
 
-    // 开始引导
+
     async startGuide() {
         await this.createArrow()
         this.showNextStep();
@@ -78,7 +78,7 @@ export default class GuideManager extends Singleton {
         this.arrow = arrow.getComponent(GuideArrow)
     }
 
-    // 显示下一步引导
+
     private showNextStep() {
         this.hideGuide()
         this.currentStep = this.guideSteps.find(element => element.id == this.currentGuideId)
@@ -89,7 +89,7 @@ export default class GuideManager extends Singleton {
 
 
 
-        // this.saveGuideProgress(); // 保存引导进度
+
     }
     onEventTrigger(name: string) {
         if (this.currentStep.triggerNext == name) {

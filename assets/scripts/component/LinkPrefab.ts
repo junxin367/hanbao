@@ -3,7 +3,7 @@ import { EDITOR } from "cc/env";
 
 const {ccclass, executeInEditMode, property,menu} = _decorator;
 
-// // 屏蔽2.3.1版本prefab嵌套prefab的弹框问题
+
 if (EDITOR && !window["Editor"].isBuilder) {
     window["_Scene"].DetectConflict.beforeAddChild = function() {
         return false
@@ -41,15 +41,15 @@ export default class LinkPrefab extends Component {
             if(prefabNode){
                 this._prefabNode = prefabNode;
 
-                // Object["Flags"].DontSave          // 当前节点不会被保存到prefab文件里
-                // Object["Flags"].LockedInEditor    // 当前节点及子节点在编辑器里不会被点击到
-                // Object["Flags"].HideInHierarchy   // 当前节点及子节点在编辑器里不显示
+
+
+
 
                 prefabNode["_objFlags"] |= (Object["Flags"].DontSave | Object["Flags"].LockedInEditor | Object["Flags"].HideInHierarchy);
                 let transform=prefabNode.getComponent(UITransform)
                 prefabNode.setPosition(Vec3.ZERO)
                 transform.setContentSize(transform.contentSize)
-                this.node.addChild(prefabNode) // 添加到最底层
+                this.node.addChild(prefabNode) 
                 prefabNode.setSiblingIndex(0)
                 prefabNode.name = "prefabNode";
              
@@ -58,7 +58,7 @@ export default class LinkPrefab extends Component {
     }
 
     public getPefabNode(): Node {
-        this._initPrefab()      // 防止当前node被默认隐藏导致，prefabNode获取不到
+        this._initPrefab()      
         return this._prefabNode
     }
 
@@ -75,7 +75,7 @@ export default class LinkPrefab extends Component {
         if (!this._prefab || this._prefabNode) { 
             return
         }
-        let instNode = this.node.getChildByName("prefabNode");      // 避免外部通过instantiate(this.node),导致prefabNode被创建多份
+        let instNode = this.node.getChildByName("prefabNode");      
         if (instNode) {
             this._prefabNode = instNode;
         }
@@ -88,7 +88,7 @@ export default class LinkPrefab extends Component {
                 
                 if(prefabNode){
                     this._prefabNode = prefabNode;
-                    this.node.addChild(prefabNode) // 添加到最底层
+                    this.node.addChild(prefabNode) 
                     prefabNode.setSiblingIndex(0)
                     prefabNode.name = "prefabNode";
                     let transform=prefabNode.getComponent(UITransform)

@@ -23,13 +23,13 @@ export class SpecialOrderWin extends BasePanel {
             }
             AdManager.showVideo((code: number) => {
                 if (code == 0) {
-                    // Model.game.money += this.money * 3;
+
                     let node = new Node();
                     node.parent = Global.game.sceneNode;
                     node.position = Global.player.node.position.clone();
                     node.addComponent(InitMoneyArea).createInitMoney(this.money * 3);
 
-                    // Model.save();
+
                     Global.game.deliveryDriver.orderComplete();
                     this.close(true)
                 }
@@ -39,8 +39,8 @@ export class SpecialOrderWin extends BasePanel {
                 MsgHints.show("订单未完成")
                 return;
             }
-            // Model.game.money += this.money;
-            // Model.save();
+
+
             let node = new Node();
             node.parent = Global.game.sceneNode;
             node.position = Global.player.node.position.clone();

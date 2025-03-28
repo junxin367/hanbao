@@ -37,7 +37,7 @@ export class HeadTip extends BaseComponent {
     public set target(value: any) {
         this._target = value;
         this._target.node.on(GameConst.EventType.UpdateHeadTip, this.onUpdateHeadTip, this)
-      //  this._target.node.on(GameConst.EventType.Remove, this.onRemove, this)
+
 
     }
     onLoad() {
@@ -60,10 +60,10 @@ export class HeadTip extends BaseComponent {
 
     }
     onDisable(): void {
-      //  this._target.node.targetOff(this)
+
     }
     onRemove() {
-      //  AssetPool.Instance().put(this);
+
     }
 
     start() {
@@ -73,8 +73,8 @@ export class HeadTip extends BaseComponent {
 
     update(deltaTime: number) {
         if (this.target) {
-            //this.target.node.getWorldPosition(v3_0);
-            //  Global.camera.node.getComponentInChildren(Camera).convertToUINode(v3_0, Global.game.uiNode, v3_0);
+
+
             this.node.setPosition(this.target.node.getWorldPosition().clone().add(v3(0, 2)));
         }
 
@@ -87,7 +87,7 @@ export class HeadTip extends BaseComponent {
             this.node_package.active = true
     }
     hideAll() {
-        // this.node_count.active = false
+
         this.node_count.getComponent(MeshText).text = "";
         this.node_food.active = false
         this.node_bg.active = false
@@ -102,7 +102,7 @@ export class HeadTip extends BaseComponent {
     onFoodEnter() {
         this.hideAll()
         this.node_count.active = true
-        // this.node_food.active = true
+
         this.node_bg.active = true
     }
     onNoFoodEnter() {

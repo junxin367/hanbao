@@ -8,7 +8,7 @@ enum HorizontalAlignType {
     Right
 }
 
-//图集
+
 class MeshTextAtlas {
     atlasData: SpriteAtlas;
     private typeMap: Map<any, Map<string, SpriteFrame>> = new Map<any, Map<string, SpriteFrame>>();
@@ -124,7 +124,7 @@ class ToolMeshText {
         let offestH = 0;
         switch (hAlignType) {
             case HorizontalAlignType.Center:
-                offestH = -totalwidth / 2;//-(verticeCount >> 3);
+                offestH = -totalwidth / 2;
                 break;
             case HorizontalAlignType.Left:
                 offestH = 0;
@@ -151,14 +151,14 @@ class ToolMeshText {
             var spriteUV = spriteData['frameUV'];
             r = spriteUV.r;
 
-            // pos: x,y,z
+
             var iPos = i * 3;
-            // v0: left top
+
             verticesBuffer[iPos + 0] = offestH;
             verticesBuffer[iPos + 1] = tmp + 1;
             verticesBuffer[iPos + 2] = 0;
 
-            // v1: left bottom
+
             iPos += 3;
             verticesBuffer[iPos + 0] = offestH;
             verticesBuffer[iPos + 1] = tmp;
@@ -166,35 +166,35 @@ class ToolMeshText {
 
             offestH += r;
 
-            // v2: right top
+
             iPos += 3;
             verticesBuffer[iPos + 0] = offestH;
             verticesBuffer[iPos + 1] = tmp + 1;
             verticesBuffer[iPos + 2] = 0;
 
-            // v3: right bottom
+
             iPos += 3;
             verticesBuffer[iPos + 0] = offestH;
             verticesBuffer[iPos + 1] = tmp;
             verticesBuffer[iPos + 2] = 0;
 
 
-            // uv: x, y
+
             var iUV = i * 2;
-            // v0: left top
+
             uvBuffer[iUV + 0] = spriteUV.xMin;
             uvBuffer[iUV + 1] = spriteUV.yMin;
 
-            // v1: left bottom
+
             iUV += 2;
             uvBuffer[iUV + 0] = spriteUV.xMin;
             uvBuffer[iUV + 1] = spriteUV.yMax;
 
-            // v2: right top
+
             iUV += 2;
             uvBuffer[iUV + 0] = spriteUV.xMax;
             uvBuffer[iUV + 1] = spriteUV.yMin;
-            // v3: right bottom
+
             iUV += 2;
             uvBuffer[iUV + 0] = spriteUV.xMax;
             uvBuffer[iUV + 1] = spriteUV.yMax;
@@ -246,7 +246,7 @@ export default class MeshText extends Component {
             this._text = "";
         }
 
-        //编辑器每次都更新  可能重新设置了材质 图集
+
         if (EDITOR || !this._atlas) {
             this._atlas = new MeshTextAtlas(this.atlas);
             this._atlas.GenerateChars(this.chars);

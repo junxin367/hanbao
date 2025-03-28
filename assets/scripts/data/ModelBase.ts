@@ -11,7 +11,7 @@ export function save(target: any, keyName: string) {
 
 
 export default class ModeBase {
-    // protected save_key = "base_key"
+
     public static classMap: Map<Function, any[]> = new Map();
     public getData(): object {
         let data = {}
@@ -23,7 +23,7 @@ export default class ModeBase {
     }
 
     public setData(data: any) {
-        //初始化下数据       
+
         if (!data) return;
         let savepars = ModeBase.classMap.get(this.constructor)
         for (let i = 0; i < savepars.length; ++i) {
@@ -40,19 +40,19 @@ export default class ModeBase {
         }
     }
 
-    // public save() {
-    //     var strdata = JSON.stringify(this.getData());
-    //     sys.localStorage.setItem(this.save_key, strdata);
-    // }
 
 
-    // public load() {
-    //     let strdata = sys.localStorage.getItem(this.save_key);
-    //     if (!strdata || strdata == "") {
-    //     }
-    //     else {
-    //         this.setData(JSON.parse(strdata));
-    //     }
-    // }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

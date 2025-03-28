@@ -106,7 +106,7 @@ export default class Utils {
             if (longTime) {
                 return front + ":" + mid;
             } else {
-                return mid + ":" + back;//+ '秒';
+                return mid + ":" + back;
             }
         }
     }
@@ -170,7 +170,7 @@ export default class Utils {
         return newArr
     }
 
-    // 获取XZ轴的最近距离
+
     public static GetNearstAxisXZDis(a: Vec3, b: Vec3) {
         return Math.min(Math.abs(a.x - b.x), Math.abs(a.z - b.z));
     }

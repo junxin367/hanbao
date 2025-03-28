@@ -61,7 +61,7 @@ export class UpgradeOffice extends MapItemBase {
 
 
     onInit() {
-        //员工
+
         if (this.cfg.Type == 5 || this.cfg.Type == 6) {
             ResHelper.loadResSync("entity/OfficeStaff", "prefabs", Prefab).then((ret: Prefab) => {
                 let node = instantiate(ret);
@@ -70,7 +70,7 @@ export class UpgradeOffice extends MapItemBase {
                 node.setRotation(this.staffpos.getRotation());
             })
         }
-        //添加打杂的员工
+
 
         let cn = Model.game.upgradeInfo[E_UPGRADE_TYPE.STAFF_COUNT]
         if (cn > 0 && this.cfg.Type == 5) {

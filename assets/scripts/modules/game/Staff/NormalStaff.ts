@@ -15,30 +15,30 @@ const { ccclass, property } = _decorator;
 
 interface WorkerAction {
     actionType: number;
-    prob: number; // 触发概率
-    conditions: number[]; // 触发条件
+    prob: number; 
+    conditions: number[]; 
 }
 
-//工人基类，默认全局帮忙的
-//搬运汉堡，
-//优先搬运到打包台(概率大)
-//小概率搬运到餐台
-//搬运到得来速
-//检测是否有垃圾可以收拾，没有就休息
+
+
+
+
+
+
 
 enum NORMAL_STAFF_ACTION {
-    CHECK = 0,//最开始检测地图是否构建完成
-    CARRY_TO_CASIER_COUNTER = 1,//搬运汉堡到柜台
-    CARRY_TO_PACKAGE_COUNTER,//搬运汉堡到打包台
-    CARRY_TO_DRIVECAR_COUNTER,//搬运打包的到外卖台
-    CLEAN_LITTER,//捡垃圾
-    IDLE,//发呆
-    SLEEP,//打瞌睡
+    CHECK = 0,
+    CARRY_TO_CASIER_COUNTER = 1,
+    CARRY_TO_PACKAGE_COUNTER,
+    CARRY_TO_DRIVECAR_COUNTER,
+    CLEAN_LITTER,
+    IDLE,
+    SLEEP,
     GOTO_RESET,
 }
 
 
-//普通员工，帮忙那种
+
 @ccclass('NormalStaff')
 export class NormalStaff extends BaseStaff {
 
@@ -58,13 +58,13 @@ export class NormalStaff extends BaseStaff {
         this.fsm.addState(new FSMAction(this, NORMAL_STAFF_ACTION.SLEEP, this.onRestingEnter, this.onRestingUpdate, this.onRestingExit))
         this.fsm.addState(new FSMAction(this, NORMAL_STAFF_ACTION.CHECK, this.onCheckEnter, this.onCheckUpdate))
         this.fsm.addState(new FSMAction(this, NORMAL_STAFF_ACTION.GOTO_RESET, this.onGotoRestEnter, this.onGotoRestUpdate))
-        // this.fsm.enterState(WORKER_ACTION.IDLE)
+
     }
 
     start() {
         this.moveEngine = this.node.addComponent(MovePath)
-        //  this.fsm.addState(new FSMAction(this, STAFF_ACTION.CHECK, this.onCheckEnter, this.onCheckUpdate))
-        // this.fsm.addState(new FSMAction(this, STAFF_ACTION.GOTO_REST_POINT, this.onGotoRestEnter, this.onGotoRestUpdate))
+
+
 
 
 
@@ -72,7 +72,7 @@ export class NormalStaff extends BaseStaff {
 
         this.fsm.changeState(NORMAL_STAFF_ACTION.CHECK)
     }
-    //搬运东西到收银台
+
     onGotoCashierEnter() {
         let machine1 = Global.game.map.getMapItemById(FacilityID.Burger_Machine1) as PropMaker
         let machine2 = Global.game.map.getMapItemById(FacilityID.Burger_Machine2) as PropMaker
@@ -98,11 +98,11 @@ export class NormalStaff extends BaseStaff {
     onGotoCashierUpdate() {
 
     };
-    //搬运东西到打包台
+
     onGoPackageEnter() {
         let facility = Global.game.map.getMapItemById(FacilityID.PackageTable) as PackageTable
         if (facility.unlock && facility.stackList.length < 20) {
-            // this.gotoMachine()
+
             let machine1 = Global.game.map.getMapItemById(FacilityID.Burger_Machine1) as PropMaker
             let machine2 = Global.game.map.getMapItemById(FacilityID.Burger_Machine2) as PropMaker
             let rnd = Math.floor(Math.random() * 2 + 2)
@@ -130,9 +130,9 @@ export class NormalStaff extends BaseStaff {
     onGoPackageUpdate(dt: number) {
 
     };
-    //搬运到外卖台
+
     onGotoDriveCarEnter() {
-        //先去打包台指定位置
+
         let facility = Global.game.map.getMapItemById(FacilityID.PackageTable)
         let endPos = v3()
         Vec3.subtract(endPos, facility.triggerAreaList[3].pos, v3(-0.5, 0, 0))
@@ -160,7 +160,7 @@ export class NormalStaff extends BaseStaff {
             }
         }
     };
-    //搬运垃圾
+
     curDesk: Desk = null
     onCleanLitterEnter() {
         this.curDesk = null
@@ -198,7 +198,7 @@ export class NormalStaff extends BaseStaff {
             this.fsm.changeState(NORMAL_STAFF_ACTION.IDLE)
     }
     onIdleEnter() {
-        // this.checkNextAction()
+
         this.aidTime = 0
         this.aidDelay = Math.random() + 0.5
     }
@@ -227,7 +227,7 @@ export class NormalStaff extends BaseStaff {
 
 
     }
-    //获取动作概率
+
     getRandomAction(actions: WorkerAction[]) {
         const totalProbability = actions.reduce((sum, action) => sum + action.prob, 0);
         const random = Math.random() * totalProbability;
@@ -253,7 +253,7 @@ export class NormalStaff extends BaseStaff {
         }
     }
 
-    //去休息点
+
     onGotoRestEnter() {
         let endNode = Global.game.map.GetGameObject('restPoint' + this.index)
         if (endNode) {
@@ -277,7 +277,7 @@ export class NormalStaff extends BaseStaff {
         this.restingTime = Math.random() + 1
         this.createSleepState()
     }
-    // aidTime = 0
+
     restingTime = 0
     onRestingUpdate(dt: number) {
         this.aidTime += dt
@@ -337,7 +337,7 @@ export class NormalStaff extends BaseStaff {
     cleanGarbage() {
         let desk = Global.game.map.getSeatWithLitter()
         if (desk) {
-            // let nearPos = desk.getNearPos(this.node.worldPosition.clone())
+
             let nearPos = desk.node.worldPosition.clone()
             let path = Global.game.map.findPath(this.node.worldPosition.clone(), desk.node.worldPosition.clone());
             if (path.length > 0) {
@@ -359,7 +359,7 @@ export class NormalStaff extends BaseStaff {
         let path = Global.game.map.findPath(this.node.worldPosition, trashBoxNode.worldPosition.clone());
         if (path.length > 0) {
             this.goto(path, () => {
-                //垃圾没有了
+
                 if (!Global.game.checkConditions(this.workerAction.conditions)) {
                     this.checkNextAction()
                 }
@@ -435,7 +435,7 @@ export class NormalStaff extends BaseStaff {
         return item
     }
 
-    //动画流程的播放
+
     updateAni() {
         if (!this.moveEngine.running) {
             if (this.stackList.length == 0)
@@ -466,7 +466,7 @@ export class NormalStaff extends BaseStaff {
     handleError(dt) {
         this.t += dt
         if (this.t > 1) {
-            //处理一些异常
+
             if (this.fsm.isInState(NORMAL_STAFF_ACTION.CARRY_TO_CASIER_COUNTER)) {
                 if (this.stackList.length > 0) {
                     let type = this.stackList[0].getComponent(Item).type

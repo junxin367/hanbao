@@ -69,7 +69,7 @@ export class Player extends Role {
         item.parent = Global.game.node_container
         item.getComponent(DirArrow).target = this
         this.dirArrow = item;
-        // item.getComponent(DirArrow).aimPos=v3(0,4,0)
+
     }
     setAimPos(v: Vec3) {
         if (this.dirArrow) {
@@ -93,7 +93,7 @@ export class Player extends Role {
         this.velocity.set(Vec2.ZERO);
         this.checkCollideWithCustomer();
     }
-    //检测和捣乱，睡觉顾客的碰撞
+
     private checkCollideWithCustomer() {
         let customer = Global.game.getCallingCustomer()
         if (customer) {
@@ -139,8 +139,8 @@ export class Player extends Role {
                 pos.x += response.overlapV.x;
                 pos.z += response.overlapV.y;
                 this.node.worldPosition = pos;
-                // this.node.worldPosition.x += response.overlapV.x;
-                // this.node.worldPosition.z += response.overlapV.y;
+
+
             }
         }
     }
@@ -153,14 +153,14 @@ export class Player extends Role {
             this.velocity.x = this.velocity.y = 0;
         }
 
-        //移动
+
         let pos = this.node.position;
         pos.set(pos.x + this.velocity.x * dt * this.speed, 0, pos.z + this.velocity.y * dt * this.speed);
         this.node.position = this.node.position.lerp(pos, 0.5);
 
         this.playerCollision();
 
-        //旋转
+
         if (this.velocity.lengthSqr() > 0) {
             const targetRotation = Math.atan2(this.velocity.x, this.velocity.y) * 180 / Math.PI;
             Quat.fromEuler(qt_0, 0, targetRotation, 0)
@@ -171,10 +171,10 @@ export class Player extends Role {
 
         this.updateAni()
 
-        //更新轮滑状态
+
         this.updateSkate(dt);
 
-        //检查靠近外卖员  
+
         this.checkDeliveryDriver();
 
         if (this.maxNode && this.maxNode.active) {
@@ -224,7 +224,7 @@ export class Player extends Role {
     private IAP_Ride: Node = null;
 
 
-    //动画流程的播放
+
     updateAni() {
         let hasphc = Model.game.hasPingHengChe();
         if (this.velocity.equals(Vec2.ZERO) || hasphc) {
@@ -257,7 +257,7 @@ export class Player extends Role {
 
     getStackItemPos(index: number): { pos: Vec3, rot: Quat } {
         let node_burger = this.GetGameObject('Burger')
-        let pos = node_burger.worldPosition.clone()// node_burger.up.clone();
+        let pos = node_burger.worldPosition.clone()
 
         let ypos = node_burger.up.clone().normalize();
         let xzpos = v3(this.velocity.x, 0, this.velocity.y).negative().normalize()
@@ -287,7 +287,7 @@ export class Player extends Role {
 
         this.checkMax()
 
-        //burger.flyTo(v3(0, burger.index * 0.3, 0))
+
     }
     checkMax() {
         this.maxNode.active = this.stackList.length >= Model.game.getPlayerCarryMax()

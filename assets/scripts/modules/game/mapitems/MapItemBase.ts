@@ -1,6 +1,6 @@
 
 
-//机器、桌子等
+
 
 import { _decorator, Vec3, Label, Node, Prefab, instantiate, tween, v3, Tween } from 'cc';
 import GameData, { ProgressConfig } from "../../../GameData";
@@ -21,11 +21,11 @@ import { AudioMgr } from '../../../utils/AudioMgr';
 const { ccclass, property } = _decorator;
 
 
-//和mapItem的碰撞触发器
+
 export interface TriggerArea {
     type: number;
     pos: Vec3
-    dis: number;//通过距离判断
+    dis: number;
 }
 
 
@@ -47,26 +47,26 @@ export class MapItemBase extends BaseComponent {
         }).start();
     }
 
-    //存储列表
+
     public stackList: any[] = []
 
-    //碰撞区域
+
     public triggerAreaList: TriggerArea[] = [];
-    //辅助变量用来计数
+
     public triggerTimeCount: number = 0;
-    //money相关
+
     protected playReduceAni: boolean = false
     protected moneyStack: Node[] = []
     protected earnMoney: number = 0
 
     start(): void {
-        let progresslist = Utils.objectToArray<ProgressConfig>(GameData.getProgressConfig()).filter(a => a.Scene == 1);          //解锁规则
+        let progresslist = Utils.objectToArray<ProgressConfig>(GameData.getProgressConfig()).filter(a => a.Scene == 1);          
         this.cfg = progresslist.find(a => {
             return a.NodeName == this.node.name;
         });
 
         if (this.node_leveUp) this.node_leveUp.active = false;
-        // console.log(this.node.name, this.cfg);
+
         this.node.active = true;
         if (this.cfg) {
             let open = Model.game.ProgressIds.indexOf(this.cfg.Id) != -1;
@@ -107,7 +107,7 @@ export class MapItemBase extends BaseComponent {
         this.initArea();
         Global.game.map.addMapItem(this);
     }
-    //初始化各个设施的区域
+
     initArea() {
         this.triggerAreaList.push({ type: FacilityAreaType.UNLOCK, pos: this.node.worldPosition, dis: 1 })
         this.triggerAreaList.push({ type: FacilityAreaType.UPGRADE, pos: this.GetGameObject('UpgradeArea')?.worldPosition, dis: 1 })
@@ -118,9 +118,9 @@ export class MapItemBase extends BaseComponent {
     }
 
     refreshState(animation: boolean = false) {
-        // if (this.cfg?.Id == 15) {
-        //     debugger;
-        // }
+
+
+
         if (this.model) this.model.active = this.unlock;
         if (this.unlockUI) this.unlockUI.node.active = this.checkCanUnlock();
         if (this.upgradeUI) this.upgradeUI.node.active = this.checkCanUpgrade()
@@ -140,11 +140,11 @@ export class MapItemBase extends BaseComponent {
         if (this.unlockUI) this.unlockUI.node.active = this.checkCanUnlock();
     }
 
-    //检查是否可以解锁
+
     checkCanUnlock() {
         if (this.unlock) return false;
 
-        //如果免费 并且前置条件满足 直接解锁
+
         if (this.cfg.MoneyCost == 0 && Model.game.ProgressIds.indexOf(this.cfg.PreLimit) != -1) {
             Model.game.ProgressIds.push(this.cfg.Id);
             this.refreshState(true);
@@ -162,7 +162,7 @@ export class MapItemBase extends BaseComponent {
 
         return false
     }
-    //这个地方需要判断上限
+
     checkCanUpgrade() {
         if (!this.unlock) return false;
         if (Model.game.guideID < 12) return false
@@ -176,10 +176,10 @@ export class MapItemBase extends BaseComponent {
 
 
     get unlock() {
-        // if (this.cfg.MoneyCost == 0 && this.cfg.PreLimit == 0 && Model.game.ProgressIds.indexOf(this.cfg.Id) == -1) {
-        //     Model.game.ProgressIds.push(this.cfg.Id)
-        //     Model.save();
-        // }
+
+
+
+
         return Model.game.ProgressIds.indexOf(this.cfg.Id) != -1;
     }
 
@@ -194,7 +194,7 @@ export class MapItemBase extends BaseComponent {
     addOne(item: any = null) {
 
     }
-    //处理和角色的各种碰撞
+
     onTriggerEnter(role: Role, triggerType: number) {
         if (!(role instanceof Player)) return;
         this.triggerTimeCount = 0
@@ -217,16 +217,16 @@ export class MapItemBase extends BaseComponent {
         else if (triggerType === FacilityAreaType.UPGRADE && this.checkCanUpgrade())
             this.upgradeUI?.playerStay(true)
     }
-    //当创建的时候
+
     onBuild() {
 
     }
-    //当升级的时候
+
     onUpgrade() {
 
     }
 
-    //初始创建8个货币，增加的时候改变其size
+
     async initMoney() {
         let moneyArea = this.GetGameObject('MoneyArea')
         for (let i = 0; i < 8; i++) {
@@ -276,7 +276,7 @@ export class MapItemBase extends BaseComponent {
 
         this.scheduleOnce(() => {
             this.playReduceAni = false
-            this.createMoney()//有可能播放动画期间有金钱增加 
+            this.createMoney()
             AudioMgr.Instance().playSFX('cash')
             this.unscheduleAllCallbacks()
         }, 0.51)

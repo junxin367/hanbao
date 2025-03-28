@@ -5,7 +5,7 @@ import { CashierDesk } from '../mapitems/CashierDesk';
 import { BaseStaff, STAFF_ACTION } from './BaseStaff';
 
 const { ccclass, property } = _decorator;
-//收银员工
+
 @ccclass('CashierStaff')
 export class CashierStaff extends BaseStaff {
     table: CashierDesk;
@@ -38,7 +38,7 @@ export class CashierStaff extends BaseStaff {
         if (customer&&customer.canAdd()) {
             this.aidTime += deltaTime
             let delayTime=Model.game.getCashierCounterProp()
-            if (this.aidTime > delayTime) {//这个时间升级后会变动                
+            if (this.aidTime > delayTime) {
                 let item = this.table.reduceOne()
                 if (item) {
                     customer.addFood(item)

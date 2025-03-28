@@ -3,7 +3,7 @@ import { _decorator, Component, Node, Vec3, v3, quat, Quat, Camera } from 'cc';
 const { ccclass, property } = _decorator;
 let qt_0 = quat()
 let qt_1 = quat()
-//聚焦信息
+
 interface LookAtInfo {
     node: Node;
     cameraLerpNode?: Node;
@@ -30,8 +30,8 @@ export class FollowCamera extends Component {
     }
     public set target(value: Node) {
         this._target = value;
-        // if (value)            
-        //     Vec3.subtract(this.offset,this.node.worldPosition,value.worldPosition);
+
+
     }
 
 
@@ -52,15 +52,15 @@ export class FollowCamera extends Component {
             target = this.curLookInfo.node
         }
 
-        // 计算目标位置
+
         const targetPos = v3()
         Vec3.add(targetPos, target.worldPosition, this.offset)
 
-        // 平滑地过渡到目标位置
+
         const cameraPos = this.node.worldPosition;
         let smoothedPos: Vec3 = v3()
         Vec3.lerp(smoothedPos, cameraPos, targetPos, 0.1);
-        // 更新摄像机位置
+
         this.node.setWorldPosition(smoothedPos);
 
         let v = v3();
@@ -78,9 +78,9 @@ export class FollowCamera extends Component {
 
         }
 
-        //角度        
+
         if (this.curLookInfo && this.curLookInfo.cameraLerpNode) {
-            //相机插值到目标位置
+
             this._camera.node.position = Vec3.lerp(v, this._camera.node.position, this.curLookInfo.cameraLerpNode.position, 0.1)
             this._camera.node.rotation = Quat.slerp(qt_1, this._camera.node.rotation, this.curLookInfo.cameraLerpNode.rotation, 0.1);
         } else {

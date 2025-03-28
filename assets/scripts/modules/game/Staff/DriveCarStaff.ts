@@ -5,7 +5,7 @@ import { DriveCarTable } from '../mapitems/DriveCarTable';
 import { BaseStaff, STAFF_ACTION } from './BaseStaff';
 
 const { ccclass, property } = _decorator;
-//得来速固定员工
+
 @ccclass('DriveCarStaff')
 export class DriveCarStaff extends BaseStaff {
     table: DriveCarTable;
@@ -39,7 +39,7 @@ export class DriveCarStaff extends BaseStaff {
         if (car) {
             this.aidTime += deltaTime
             let delay=Model.game.getDriveCarCounterProp()
-            if (this.aidTime >delay) {//这个时间升级后会变动
+            if (this.aidTime >delay) {
                 let item = this.table.reduceOne()
                 if (item) {
                     car.addFood(item)

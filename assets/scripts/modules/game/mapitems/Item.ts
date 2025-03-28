@@ -4,7 +4,7 @@ import BaseComponent from '../../../component/Component';
 import Utils from '../../../utils/Utils';
 import { Player } from '../Player';
 const { ccclass, property } = _decorator;
-//物品基类
+
 @ccclass('Item')
 export class Item extends BaseComponent {
     delegate: any
@@ -14,7 +14,7 @@ export class Item extends BaseComponent {
     rotation = new Quat();
     model: Node;
 
-    //0=fly 1=add
+
     state: number = 0
 
     start() {

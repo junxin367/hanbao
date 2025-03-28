@@ -18,7 +18,7 @@ export default class NetTool {
 
         xhr.onload = () => {
             if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                if (xhr.responseText == "" && !handler) return;//打点没有返回
+                if (xhr.responseText == "" && !handler) return;
                 var ret = JSON.parse(xhr.responseText);
 
                 if (handler) {

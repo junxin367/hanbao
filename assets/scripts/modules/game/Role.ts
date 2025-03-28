@@ -29,7 +29,7 @@ export class Role extends BaseComponent {
         let itemComp = item.getComponent(Item);
         itemComp.delegate = this
         itemComp.index = this.stackList.length;
-        //itemComp.position = this.GetGameObject('Burger').worldPosition.clone();
+
         let targetPos=v3(0, itemComp.index * 0.3, 0)
         Global.game.flyTo(item, parent, parent.worldPosition.clone().add(v3(0, itemComp.index * 0.3, 0)), 0.25, () => {
             item.position=targetPos
@@ -64,7 +64,7 @@ export class Role extends BaseComponent {
         this.triggerCheck()
     }
     triggerCheck() {
-        //检测是否进入解锁区域
+
         if (!Global.game || !Global.game.map) return
         let listitems = Global.game.map.allMapItems;
         for (var i = listitems.length - 1; i >= 0; --i) {
@@ -72,7 +72,7 @@ export class Role extends BaseComponent {
             let triggerList = item.triggerAreaList;
             if (!triggerList) continue
             for (const trigger of triggerList) {
-                //  let can = item.checkCond(trigger.type);
+
                 if (trigger.pos) {
                     let key = `__player_in_${trigger.type}_${this.key}`
                     let dis = this.node.worldPosition.clone().subtract(trigger.pos).length()

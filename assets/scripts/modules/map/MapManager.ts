@@ -72,12 +72,12 @@ export class MapManager extends BaseComponent {
             if (a.cfg) a.refreshState(a.cfg.Id == id);
         })
         this.build();
-        // this.node.runAction(cc.sequence(cc.delayTime(2), cc.callFunc(() => {
-        //     this.newLockView();
-        // })))
-        // AdManager.autoVide(() => {
-        //     LocalData.Int.add(EPropName.cash, 40)
-        // });
+
+
+
+
+
+
         GuideManager.Instance().hideGuide()
         this.scheduleOnce(() => {
             GuideManager.Instance().onEventTrigger('onCreateFacility' + id)
@@ -147,7 +147,7 @@ export class MapManager extends BaseComponent {
             tmp = tmp.reverse()
             holePolygons.push(tmp);
         }
-        // 辅助点
+
         let points: Vec2[] = [];
         let pointRoot = this.node.getChildByName("优化三角形辅助点");
         if (pointRoot) {
@@ -349,7 +349,7 @@ export class MapManager extends BaseComponent {
 
         return segmentPoints;
     }
-    //检查已经开的桌子数量
+
     getOpenDeskCount() {
         let count = 0
         for (const desk of this.desks) {

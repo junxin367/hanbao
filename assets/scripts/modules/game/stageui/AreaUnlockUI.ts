@@ -33,7 +33,7 @@ export class AreaUnlockUI extends BaseComponent {
                 pro = Model.game.MoneyPutInfo[key] / cost;
                 this.meshtext.text = (cost - Model.game.MoneyPutInfo[key]) + "";
             } else {
-                //满级
+
                 this.node.active = false;
             }
         } else {
@@ -47,7 +47,7 @@ export class AreaUnlockUI extends BaseComponent {
     }
 
     mapitem: MapItemBase = null;
-    //放入钱
+
     private putcashtime = 0;
     private putCash(isupgrade: boolean) {
         if (Date.now() - this.putcashtime < 50) return false;
@@ -95,7 +95,7 @@ export class AreaUnlockUI extends BaseComponent {
             this.refreshUI();
             Global.game.playMoneyAni(Global.player.node.worldPosition.clone(), this.node.worldPosition.clone(), 1)
         } else {
-            //钱不够
+
             EventManager.Inst.event(EventType.NotEnoughMoney)
         }
 

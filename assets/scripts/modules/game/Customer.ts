@@ -18,20 +18,20 @@ let qt_0 = quat()
 let qt_1 = quat()
 
 export enum CUSTOMER_ACTION {
-    GOTO_ORDER_STATION,       //去点餐台
-    WAITTING_IN_QUEUE,        //等待点餐，排队中
-    ANGRY,                    //排队中有点打电话，愤怒
-    ORDING,                   //点餐中，必须等待自己点的数量够了
-    CHECK_SEAT,               //检测是否有空位
-    GOTO_TABLE,               //拿桌食物去桌子吃饭
-    WAITTING_PARTNER,         //等待同伴到来
-    EATING,                   //吃饭中
-    LEAVING,                  //离开
-    PHONE,                    //打电话，捣乱顾客   
-    SLEEPING,                 //睡着了
+    GOTO_ORDER_STATION,       
+    WAITTING_IN_QUEUE,        
+    ANGRY,                    
+    ORDING,                   
+    CHECK_SEAT,               
+    GOTO_TABLE,               
+    WAITTING_PARTNER,         
+    EATING,                   
+    LEAVING,                  
+    PHONE,                    
+    SLEEPING,                 
 }
 
-//顾客
+
 @ccclass('Customer')
 export class Customer extends Role {
     fsm: FSM
@@ -40,16 +40,16 @@ export class Customer extends Role {
     private ani: SkeletalAnimation
     queueIndex: number = -1
 
-    //需要的食物信息
+
     needFoodInfo: { type: number, count: number }
     ownFood: number = 0
     seatInfo: { index: number, pos: Vec3, desk: Desk }
 
-    //装食物的节点
+
     foodNode: Node
     stackList: Node[]
 
-    //吃饭时间
+
     eattingTime: number = 0
     eattingTimeCount: number = 0
 
@@ -58,7 +58,7 @@ export class Customer extends Role {
 
     private angryTimeCount: number = 0
     private angryTimeDelay: number = 0
-    phoneQueueIndex: number = -1//打电话的时候所在索引
+    phoneQueueIndex: number = -1
 
     private _type: number = GameConst.CUSTOME_TYPE.Normal;
 
@@ -93,7 +93,7 @@ export class Customer extends Role {
         this.GetGameObject('Stage01_Skin').active = false
 
         let mat = this.GetGameObject('main_Character').getComponent(MeshRenderer).material
-        // mat.setProperty('albedo', v4(0.392, 0.392, 0.392, 1))
+
 
 
         this.stackList.length=0
@@ -119,7 +119,7 @@ export class Customer extends Role {
     }
 
     onGotoOrderStationEnter() {
-        //计算要移动到的位置todo
+
         let endNode = find('stage01_cocos/CustomerPath/Path2_1', this.delegate.sceneNode)
         let endPos = v3()
         let idx = this.queueIndex
@@ -151,13 +151,13 @@ export class Customer extends Role {
     onGotoOrderStationExit() {
 
     }
-    //排队中
+
     onWaittingInQueueEnter() {
 
     }
     wattingTimeCount = 0
     onWaittingInQueueUpdate(dt: number) {
-        //如果排队过程中前面有捣乱顾客，则需要发表情
+
         this.wattingTimeCount += dt
         if (this.wattingTimeCount > 1) {
             let ruleBreakerIdx = Global.game.getCallingCustomerIndex()
@@ -186,7 +186,7 @@ export class Customer extends Role {
         }
     }
 
-    //点餐状态
+
     onOrdingEnter() {
 
         let rnd = Math.floor(Math.random() * 2 + 1)
@@ -209,22 +209,22 @@ export class Customer extends Role {
     onCheckSeatUpdate(dt: number) {
         let seatInfo = Global.game.map.getEmptySeat()
         if (seatInfo == null) {
-            //文本显示没有座位            
+
             this.headTip.changeState(HEAD_TIP_STATE.NO_SEAT)
         } else {
             this.seatInfo = seatInfo
-            this.seatInfo.desk.customSitDown(this.seatInfo.index)//这个时候就要把位置占用了
+            this.seatInfo.desk.customSitDown(this.seatInfo.index)
             this.fsm.changeState(CUSTOMER_ACTION.GOTO_TABLE)
         }
     }
     onCheckSeatExit() {
 
     }
-    //走路去座位吃饭
+
     onGotoTableEnter() {
         this.headTip.changeState(HEAD_TIP_STATE.IDLE)
         Global.game.removeCustomerFormQueue(this)
-        //查找路径，启动寻路
+
         let path = this.delegate.map.findPath(this.node.worldPosition, this.seatInfo.pos);
         if (path.length > 0) {
 
@@ -241,10 +241,10 @@ export class Customer extends Role {
     onGotoTableExit() {
 
     }
-    //等待同伴到来再吃
+
     onWattingPartnerEnter() {
-        //坐到桌子上
-        //旋转
+
+
         let pos = new Vec3();
         Vec3.subtract(pos, this.seatInfo.desk.getCenterPos(), this.node.worldPosition);
         Vec3.normalize(pos, pos);
@@ -253,7 +253,7 @@ export class Customer extends Role {
         this.node.setRotation(qt_0)
 
         this.node.worldPosition = this.seatInfo.pos.clone();
-        //添加食物到桌子上
+
         for (let i = 0; i < this.stackList.length; i++) {
             this.seatInfo.desk.addItem(this.stackList[i])
         }
@@ -267,7 +267,7 @@ export class Customer extends Role {
     onWattingPartnerExit() {
 
     }
-    //吃饭中，会偶尔发出表情，吃一个汉堡，打赏一下
+
     onEattingEnter() {
         this.seatInfo.desk.play()
         this.emojiTimeCount = 0
@@ -292,7 +292,7 @@ export class Customer extends Role {
 
     }
 
-    //吃完了，离开
+
     onLeavingEnter() {
         Global.game.removeCustomerFromEatting(this)
 
@@ -303,7 +303,7 @@ export class Customer extends Role {
 
         this.node.emit(GameConst.EventType.RemoveSleepState)
         this.seatInfo.desk.customStandUp(this.seatInfo.index)
-        //计算要移动到的位置todo
+
         let endNode = find('stage01_cocos/CustomerPath/PathExit', this.delegate.sceneNode)
         let endPos = v3()
         Vec3.subtract(endPos, endNode.worldPosition, v3(0, 0, this.queueIndex * 1.5))
@@ -322,7 +322,7 @@ export class Customer extends Role {
     onLeavingExit() {
 
     }
-    //捣乱的顾客，打电话
+
     phoneTime: number = 0;
     arrow: Node
     onPhoneEnter() {
@@ -331,7 +331,7 @@ export class Customer extends Role {
 
 
 
-        //箭头
+
         this.createArrow()
 
         Global.camera.addLookAtNode(this.node, null, 0.8)
@@ -410,9 +410,9 @@ export class Customer extends Role {
         this.triggerCheck()
         this.updateAni()
     }
-    //只和大门碰撞
+
     triggerCheck() {
-        //检测是否进入解锁区域
+
         if (!Global.game || !Global.game.map) return
         let item = Global.game.map.getMapItemById(FacilityID.Gate)
 
@@ -420,7 +420,7 @@ export class Customer extends Role {
         let triggerList = item.triggerAreaList;
         if (!triggerList) return
         for (const trigger of triggerList) {
-            //  let can = item.checkCond(trigger.type);
+
             if (trigger.pos) {
                 let key = `__player_in_${trigger.type}_${this.key}`
                 let dis = this.node.worldPosition.clone().subtract(trigger.pos).length()
@@ -466,14 +466,14 @@ export class Customer extends Role {
         }
     }
 
-    //外部接口
+
     goto(path: Vec3[], callback: Function = null) {
       
         this.moveEngine.speed = 2.5
         this.moveEngine.goto(path,callback)
         this.moveEngine.running = true
     }
-    //动画流程的播放
+
     updateAni() {
         if (this.moveEngine.running) {
             if (this.stackList.length == 0)
@@ -511,11 +511,11 @@ export class Customer extends Role {
 
     }
     shiftInQueue(index: number) {
-        //当前面顾客离开的时候需要前移
-        //计算路径
+
+
 
         this.queueIndex = index
-        this.fsm.changeState(CUSTOMER_ACTION.GOTO_ORDER_STATION, true)//强制切换状态
+        this.fsm.changeState(CUSTOMER_ACTION.GOTO_ORDER_STATION, true)
     }
 
     addFood(item: any) {
@@ -528,8 +528,8 @@ export class Customer extends Role {
         } else {
             this.ownFood++
 
-            // item.parent = this.foodNode
-            // item.position = v3(0, (this.ownFood - 1) * 0.5)
+
+
             let targetPos = v3(0, (this.ownFood - 1) * 0.5)
 
 

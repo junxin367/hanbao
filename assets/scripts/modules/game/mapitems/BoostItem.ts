@@ -55,10 +55,10 @@ export class BoostItem extends MapItemBase {
             return;
         }
 
-        //绕Y轴旋转
+
         this.root.eulerAngles = v3(0, this.root.eulerAngles.y + 100 * dt, 0);
 
-        //绕z轴旋转
+
         this.light.eulerAngles = v3(0, 0, this.light.eulerAngles.z + 100 * dt);
         this.light2.eulerAngles = v3(0, 0, this.light2.eulerAngles.z - 80 * dt);
     }

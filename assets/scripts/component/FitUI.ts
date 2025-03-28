@@ -16,12 +16,12 @@ const IsV = function () { return this.orientation == FitUIOrientation.VERTICAL }
 @requireComponent(Widget)
 export default class FitUI extends Component {
 
-    // Orientation
+
     @property({ displayName: "适配方向", type: Enum(FitUIOrientation) })
     orientation: FitUIOrientation = FitUIOrientation.VERTICAL;
 
 
-    // Android
+
     @property({ displayName: "安卓设备", type: Enum(FitUIPlatform) })
     get a() { return FitUIPlatform.ANDROID; }
 
@@ -38,7 +38,7 @@ export default class FitUI extends Component {
     bottom: boolean = false;
 
 
-    // IOS
+
     @property({ displayName: "苹果设备", type: Enum(FitUIPlatform) })
     get i() { return FitUIPlatform.IOS; }
 
@@ -55,7 +55,7 @@ export default class FitUI extends Component {
     iBottom: boolean = false;
 
 
-    // OTHER
+
     @property({ displayName: "其它设备", type: Enum(FitUIPlatform) })
     get o() { return FitUIPlatform.OTHER; }
 
@@ -86,7 +86,7 @@ export default class FitUI extends Component {
         let nPlatform = sys.platform;
         let tSize = size.width / size.height;
         tSize = this.orientation == FitUIOrientation.VERTICAL ? tSize : 1 / tSize;
-        let dSize = 0.5; // 只有全面屏需要适配
+        let dSize = 0.5; 
         if (tSize >= dSize) {
             this.updateFitStrategy(true, true);
             return;
@@ -94,7 +94,7 @@ export default class FitUI extends Component {
             this.orientation == FitUIOrientation.VERTICAL && this.updateFitStrategy(true, false);
             this.orientation == FitUIOrientation.HORIZONTAL && this.updateFitStrategy(false, true);
         }
-        // nPlatform = sys.IPHONE;
+
         let aRule = { top: this.top, left: this.left, right: this.right, bottom: this.bottom };
         let iRule = { top: this.iTop, left: this.iLeft, right: this.iRight, bottom: this.iBottom };
         let oRule = { top: this.oTop, left: this.oLeft, right: this.oRight, bottom: this.oBottom };
@@ -105,7 +105,7 @@ export default class FitUI extends Component {
             case sys.Platform.IOS:
                 this.fitPhone(iRule);
                 break;
-            default: // 非原生
+            default: 
                 if (!JSB) {
                     switch (sys.os) {
                         case sys.OS.IOS:
@@ -114,7 +114,7 @@ export default class FitUI extends Component {
                         case sys.OS.ANDROID:
                             this.fitPhone(aRule);
                             break;
-                        default: // 无法识别，按OTHER处理
+                        default: 
                             this.fitPhone(oRule)
                             break;
                     }
@@ -125,12 +125,12 @@ export default class FitUI extends Component {
 
 
     private fitPhone(rule: { top: boolean, left: boolean, right: boolean, bottom: boolean }) {
-        // 分辨率 375 x 812 
+
         let size = view.getVisibleSize();
         let height = this.orientation == FitUIOrientation.VERTICAL ? size.height : size.width
-        let liuhaiHeight = height * 44 / 812; // 顶部刘海
-        let bottomHeight = height * 34 / 812; // 底部安全区域
-        // 适配
+        let liuhaiHeight = height * 44 / 812; 
+        let bottomHeight = height * 34 / 812; 
+
         switch (this.orientation) {
             case FitUIOrientation.VERTICAL:
                 rule.top && this.updateWidget("top", liuhaiHeight);

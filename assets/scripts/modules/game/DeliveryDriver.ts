@@ -16,12 +16,12 @@ export enum DELIVERY_DRIVER_ACTION {
     LEAVING,
 }
 
-//外卖员
+
 @ccclass('DeliveryDriver')
 export class DeliveryDriver extends Role {
     private _type: number = 0;
     private fsm: FSM = null;
-    // private headTip: HeadTip = null;
+
     private moveEngine: MovePath = null;
 
     public get type(): number {
@@ -125,7 +125,7 @@ export class DeliveryDriver extends Role {
             };
             var needFoodInfo = { type: Model.game.deliveryDriverInfo.type, count: Model.game.deliveryDriverInfo.need }
             this.node.emit(GameConst.EventType.UpdateHeadTip, needFoodInfo)
-            // this.headTip.changeState(HEAD_TIP_STATE.FOOD)
+
 
             info = Model.game.deliveryDriverInfo
         }
@@ -143,7 +143,7 @@ export class DeliveryDriver extends Role {
     }
 
     onLeavingEnter() {
-        //计算要移动到的位置todo
+
 
         let DeliveryCustomerPath = this.GetGameObject("DeliveryCustomerPath", Global.game.sceneNode, true);
         let PathExit_1 = DeliveryCustomerPath.getChildByName("PathExit_1").worldPosition.clone();

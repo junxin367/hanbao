@@ -17,32 +17,32 @@ import { AudioMgr } from '../../../utils/AudioMgr';
 const { ccclass, property } = _decorator;
 
 enum DESK_ACTION {
-    IDLE,//等待坐满
-    ING,//食物减少，由于是共同少食物，所以逻辑没有放顾客里面，放这
-    LITTER,//纸团
+    IDLE,
+    ING,
+    LITTER,
 }
 
 @ccclass('Desk')
 export class Desk extends MapItemBase {
-    //数据
+
     data: { dirty: boolean, seats: number[] };
     fsm: FSM;
 
-    //座子上物品位置
+
     private ItemGroup: Node = null;
-    //钱位置
+
     private MoneyArea: Node = null;
-    //椅子
+
     private Chairs: Node[] = [];
 
-    //获取椅子模型和初始旋转角度
+
     private chairsModel: Node[] = []
     private chairsOrgRoation: Vec3[] = []
 
     foodDelay: number = 0
     foodDelayCount: number = 0
 
-    //纸团
+
     litters: Node[] = [];
 
     isWindow: boolean = false
@@ -92,7 +92,7 @@ export class Desk extends MapItemBase {
         this.fsm.enterState(DESK_ACTION.IDLE)
     }
 
-    //查询空位
+
     getEmptySeat(): { index: number, pos: Vec3, desk: Desk } {
         let info = Model.game.deskInfo[this.cfg.Id];
         if (!info) return null
@@ -111,12 +111,12 @@ export class Desk extends MapItemBase {
     }
 
 
-    //顾客坐下
+
     customSitDown(index: number) {
         let info = Model.game.deskInfo[this.cfg.Id];
         info.seats[index] = 1;
     }
-    //添加物品
+
     addItem(item: any) {
         let parent: Node = this.GetGameObject("ItemGroup") as Node;
         item.position = v3(0, this.stackList.length * 0.5, 0)
@@ -125,22 +125,22 @@ export class Desk extends MapItemBase {
 
     }
 
-    //检测是否坐满了
+
     checkSeatFull() {
         let index = this.data.seats.findIndex(a => a == 0);
         return index == -1
     }
-    //检测该桌子上的所有顾客是否走吃好了
+
     checkFinished() {
         return this.fsm.isInState(DESK_ACTION.LITTER)
     }
 
-    //顾客站起
+
     customStandUp(index: number) {
         let info = Model.game.deskInfo[this.cfg.Id];
         info.seats[index] = 0;
     }
-    //由于是几个顾客等待一起吃饭，所以这来做定时器
+
     play() {
         this.fsm.changeState(DESK_ACTION.ING)
     }
@@ -149,7 +149,7 @@ export class Desk extends MapItemBase {
         if (this.unlock) return false;
         if (this.cfg.Id == 5 && Model.game.guideID <= 13) return false
         if (Model.game.MoneyPutInfo[this.cfg.Id] >= this.cfg.MoneyCost) {
-            // Model.game.ProgressIds.push(this.cfg.Id)
+
             return false
         }
         if (Model.game.ProgressIds.indexOf(this.cfg.PreLimit) != -1 || this.cfg.PreLimit == 0) {
@@ -190,9 +190,9 @@ export class Desk extends MapItemBase {
     onLitterEnter() {
         this.createLitters()
 
-        let ids = [16, 17, 18, 19, 20]//这几张椅子不旋转
+        let ids = [16, 17, 18, 19, 20]
         if (ids.indexOf(this.cfg.Id) != -1) return
-        //椅子旋转一下
+
         for (let i = 0; i < this.chairsModel.length; i++) {
             let r = this.chairsOrgRoation[i]
             tween(this.chairsModel[i]).to(0.28, { eulerAngles: v3(r.x, r.y + Math.random() * 40 - 20, r.z) }, {}).start();
@@ -225,18 +225,18 @@ export class Desk extends MapItemBase {
 
     }
     onLitterExit() {
-        let ids = [16, 17, 18, 19, 20]//这几张椅子不旋转
+        let ids = [16, 17, 18, 19, 20]
         if (ids.indexOf(this.cfg.Id) != -1) return
-        //椅子还原
+
         for (let i = 0; i < this.chairsModel.length; i++) {
             tween(this.chairsModel[i]).to(0.28, { eulerAngles: this.chairsOrgRoation[i] }, {}).start();
         }
     }
-    //检查桌子是否有垃圾
+
     get hasLitter() {
         return this.fsm.isInState(DESK_ACTION.LITTER)
     }
-    //给小费
+
     async addMoney(customerType: number = 0) {
         let count = Math.floor(Math.random() * 5 + 4)
         if (customerType == GameConst.CUSTOME_TYPE.Boss)
@@ -294,7 +294,7 @@ export class Desk extends MapItemBase {
             super.onTriggerExit(role, triggerType)
         }
     }
-    //获取边缘位置
+
     getEdgePos() {
         let pos = this.node.worldPosition
         return [pos.clone().add(v3(0.8, 0, 0)), pos.clone().add(v3(-0.8, 0, 0)), pos.clone().add(v3(0, 0, 0.8)), pos.clone().add(v3(0, 0, -0.8))]

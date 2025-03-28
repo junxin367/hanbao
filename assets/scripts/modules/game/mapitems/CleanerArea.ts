@@ -14,13 +14,13 @@ export class CleanerArea extends MapItemBase {
         this.triggerAreaList.length = 0;
         this.triggerAreaList.push({ type: FacilityAreaType.BOOST_AREA, pos: this.node.worldPosition.clone(), dis: 1 })
     }
-    // onUnlockMapItem() {
-    //    // this.node.active = Global.game.map.getOpenDeskCount() >= 4
-    // }
 
-    // protected onEnable(): void {
-    //     EventManager.Inst.on(EventType.EVT_UNLOCK_MAPITEM, this, this.onUnlockMapItem);
-    // }
+
+
+
+
+
+
 
     protected onDisable(): void {
         EventManager.Inst.offAllCaller(this);

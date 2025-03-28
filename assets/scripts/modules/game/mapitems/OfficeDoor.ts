@@ -35,9 +35,9 @@ export class OfficeDoor extends MapItemBase {
         let dotValue = Vec3.dot(dir, door.right);
 
         if (dotValue > 0) {
-            return 1; // 表示角色在门的右侧
+            return 1; 
         } else {
-            return -1; // 表示角色在门的左侧
+            return -1; 
         }
     }
 

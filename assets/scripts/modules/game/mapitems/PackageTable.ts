@@ -9,7 +9,7 @@ import Model from '../../../data/Model';
 import { Player } from '../Player';
 import GuideManager from '../../guide/GuideManager';
 const { ccclass, property } = _decorator;
-//打包台
+
 @ccclass('PackageTable')
 export class PackageTable extends MapItemBase {
     private packageNum = 0
@@ -84,7 +84,7 @@ export class PackageTable extends MapItemBase {
             }
         } else if (triggerType == FacilityAreaType.PACKAGE_BOX) {
             if (!this.unlock) return;
-            //搬运
+
             if (performance.now() - this.triggerTimeCount > 100) {
                 this.triggerTimeCount = performance.now()
                 if (this.packageBoxStack.length > 0) {
@@ -139,7 +139,7 @@ export class PackageTable extends MapItemBase {
     packageFood() {
         let item = this.reduceOne()
         if (item) {
-            AssetPool.Instance().put(item)//to do
+            AssetPool.Instance().put(item)
             this.packageNum++
             this.GetGameObject('Coffee' + this.packageNum).active = true
             if (this.packageNum >= 4) {
@@ -152,7 +152,7 @@ export class PackageTable extends MapItemBase {
         }
 
     }
-    //添加打包好的
+
     async addPackage(save: boolean = true) {
         let node: Node = await AssetPool.Instance().createObjAsync('entity/Package', 'Package');
         node.parent = this.GetGameObject('CoffeePackage')

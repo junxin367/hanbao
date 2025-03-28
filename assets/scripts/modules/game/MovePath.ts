@@ -2,7 +2,7 @@ import { _decorator, Component, Node, Vec3, v3, Quat, quat, Color } from 'cc';
 import { MoveBase } from './MoveBase';
 import { Global } from '../../common/Global';
 const { ccclass, property } = _decorator;
-//按照路径移动
+
 let v3_0 = v3()
 let v3_1 = v3()
 let qt_0 = quat()
@@ -58,13 +58,13 @@ export class MovePath extends MoveBase {
             Vec3.subtract(pos, this.targetPos, this.node.worldPosition);
             Vec3.normalize(pos, pos);
 
-            //旋转
+
             const targetRotation = Math.atan2(pos.x, pos.z) * 180 / Math.PI + this.offsetRotation;
             Quat.fromEuler(qt_0, 0, targetRotation, 0)
             Quat.slerp(qt_1, this.node.rotation, qt_0, 0.2);
             this.node.setRotation(qt_1)
 
-            let speedmul = 1;//((lv - 1) * 0.05 + 1);
+            let speedmul = 1;
 
             Vec3.multiplyScalar(pos, pos, this.speed * speedmul * dt);
             Vec3.add(pos, this.node.worldPosition, pos);

@@ -9,7 +9,7 @@ import { Role } from '../Role';
 import { Item } from './Item';
 import { MapItemBase, } from './MapItemBase';
 const { ccclass, property } = _decorator;
-//得来速
+
 @ccclass('DriveCarTable')
 export class DriveCarTable extends MapItemBase {
 
@@ -19,14 +19,14 @@ export class DriveCarTable extends MapItemBase {
         this.triggerAreaList.push({ type: FacilityAreaType.DRIVE_THRU_PLACEMENT, pos: this.GetGameObject('DPackageTable_1').worldPosition, dis: 1.5 })
         this.triggerAreaList.push({ type: FacilityAreaType.DRIVE_THRU_SEND, pos: this.GetGameObject('Board').worldPosition, dis: 2 })
         this.triggerAreaList.push({ type: FacilityAreaType.MONEY_COLLECTION, pos: this.GetGameObject('MoneyArea').worldPosition, dis: 1.2 })
-        // this.triggerAreaList.push({ type: FacilityAreaType.DRIVE_THRU_WORKER_BUY, pos: , dis: 1.2 })
+
 
     }
 
     onInit(): void {
-        //已经解锁了收银员
+
         this.onUpgrade();
-        //创建场景中的money
+
         this.loadMoney();
         this.loadItems()
     }
@@ -76,7 +76,7 @@ export class DriveCarTable extends MapItemBase {
             if (!this.unlock) return;
             if (performance.now() - this.triggerTimeCount > 100) {
                 this.triggerTimeCount = performance.now()
-                // console.log(('put down-------'));
+
                 if (role.canTake(ItemType.Package)) {
                     let item = role.reduceOne()
                     if (item) {

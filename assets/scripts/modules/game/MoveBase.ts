@@ -1,6 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
-//移动基类，控制移动的
+
 @ccclass('MoveBase')
 export class MoveBase extends Component {
     private _paused: boolean = false;

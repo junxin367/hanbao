@@ -7,12 +7,12 @@ export default class NetControl {
 
     private static offServTimestap = 0;
 
-    //当前时间戳  秒
+
     public static NowSecond() {
         return Math.floor(Date.now() / 1000) + this.offServTimestap;
     }
 
-    //初始化
+
     public static init() {
         this.load();
     }
@@ -23,15 +23,15 @@ export default class NetControl {
 
 
 
-    //获取广告数据
+
     public static getAdsData(key: string, defaultvalue: any = null) {
         return this.getPlatData("ads", {})[key] || defaultvalue;
     }
 
-    //获取互导列表
+
     public static getGameList() {
         let list = this.getPlatData("gamelist", [])
-        //过滤掉当前游戏
+
         let len = list.length;
         for (let i = 0; i < len; i += 1) {
             if (list[i].appid == this.getPlatData("appid", "")) {
@@ -43,10 +43,10 @@ export default class NetControl {
             return b.weight - a.weight;
         })
         return list
-        // return JSON.parse(JSON.stringify(list));
+
     }
 
-    //每次从游戏列表循环取出一个
+
     private static gameIndex = 0;
     public static getGameItem() {
         let list = this.getGameList();
@@ -57,7 +57,7 @@ export default class NetControl {
         return list[this.gameIndex++ % len];
     }
 
-    //随机分享内容
+
     public static getShareData() {
         let share_title = this.getPlatData("share_title", []);
         let share_content = this.getPlatData("share_content", []);
@@ -76,7 +76,7 @@ export default class NetControl {
         return this.data[key] || defaultvalue;
     }
 
-    //获取控制数据
+
     public static getCtrData(key: string) {
         return this.data["ctrl"][key] || {}
     }
@@ -95,7 +95,7 @@ export default class NetControl {
         return false;
     }
 
-    //是否审核版本
+
     static isContrilVersion(): boolean {
         var version: string = this.getPlatData("version", "");
         if (version == "") {

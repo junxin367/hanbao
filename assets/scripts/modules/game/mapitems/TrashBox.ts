@@ -31,7 +31,7 @@ export class TrashBox extends MapItemBase {
                         AssetPool.Instance().put(item)
                     })
                     AudioMgr.Instance().playSFX('trash')
-                    // //
+
                     this.scheduleOnce(() => {
                         GuideManager.Instance().onEventTrigger('onThrowLitter')
                     }, 1)

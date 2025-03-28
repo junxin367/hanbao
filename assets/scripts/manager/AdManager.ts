@@ -8,7 +8,7 @@ export default class AdManager {
     static bannerAd: any = null;
     static videoAd: any = null;
     static interstitialAd: any = null;
-    //格子广告是否加载成功
+
     static gridAdLoaded: boolean = true;
     static gridAdMoreGame: any = null
     static gridBottom: any = null
@@ -18,8 +18,8 @@ export default class AdManager {
 
     static GRID_ID: string = "adunit-f742a6892a3c9e14";
     static GRID_ID2: string = "adunit-3db3b21864315eba"
-    static AD_MORE_GAME_ID: string = "adunit-903d5b5937226874";        //更多游戏  -九宫格
-    static AD_BOTTOM_ID: string = "adunit-d6f9dc9e0e1d477a";        //一排格子
+    static AD_MORE_GAME_ID: string = "adunit-903d5b5937226874";        
+    static AD_BOTTOM_ID: string = "adunit-d6f9dc9e0e1d477a";        
 
     static APPID: string = "wxe41f506957fd4a0c"
 
@@ -178,7 +178,7 @@ export default class AdManager {
 
 
 
-            //九宫格
+
             {
                 let winSize = wx.getSystemInfoSync();
                 this.gridAdMoreGame = wx.createCustomAd({
@@ -212,7 +212,7 @@ export default class AdManager {
             }
 
 
-            //自动九宫格
+
             setTimeout(() => {
                 this.showMoreGame(150 * 1000)
             }, 150 * 1000);
@@ -229,7 +229,7 @@ export default class AdManager {
         }
     }
 
-    // 九宫格
+
     private static lastshowmaregame = 0;
     static showMoreGame(nextopen: number = 0) {
         if (this.gridAdMoreGame) {

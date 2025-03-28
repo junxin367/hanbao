@@ -26,7 +26,7 @@ export default abstract class BasePanel extends Component {
     close(destory: boolean = true) {
         WindowManager.Instance().removeWindow(this.winInfo, destory);
     }
-    //销毁之前处理一些回收
+
     onRecycle() {
 
     }

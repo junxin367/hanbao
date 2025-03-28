@@ -33,7 +33,7 @@ const { ccclass, property } = _decorator;
 
 
 
-//负责各类元素的创建
+
 @ccclass('GameManager')
 export class GameManager extends BaseComponent {
     @property(Node)
@@ -53,7 +53,7 @@ export class GameManager extends BaseComponent {
     queueCars: Car[];
     customerID: number = 0
 
-    deliveryDriver: DeliveryDriver = null;//同时最多一个外卖
+    deliveryDriver: DeliveryDriver = null;
 
     staffs: BaseStaff[] = []
 
@@ -64,7 +64,7 @@ export class GameManager extends BaseComponent {
     createCarInterval: number = 3;
 
     createDeliveryDriverTimer: number = 0;
-    createDeliveryDriverInterval: number = 300;      //外卖cd
+    createDeliveryDriverInterval: number = 300;      
 
     start() {
         this.reset()
@@ -118,7 +118,7 @@ export class GameManager extends BaseComponent {
         director.resume()
     }
 
-    //暂停游戏，看广告的时候让buff时间也暂停
+
     private onGameHide() {
         director.pause();
     }
@@ -135,7 +135,7 @@ export class GameManager extends BaseComponent {
         WindowManager.Instance().register(this.uiNode.getChildByName("ui_container"))
         WindowManager.Instance().open(GameConst.winPath.GameWin);
     }
-    //先在这加载，后面优化
+
     loadConfigs() {
         Model.loadData()
         GameData.init(() => {
@@ -170,23 +170,23 @@ export class GameManager extends BaseComponent {
             else if (deskCount >= 2 && Math.random() < 0.05)
                 type = GameConst.CUSTOME_TYPE.Boss
 
-            //test
-            // if (this.queueCustomers.length == 3)
-            //     type = GameConst.CUSTOME_TYPE.Calling
+
+
+
 
             this.createCustomer(type, pos);
             this.createTimer = 0;
         }
     }
     checkCreateCar(dt: number) {
-        //检索是否解锁
+
         if (GuideManager.Instance().currentGuideId < 18) return
 
         this.createCarTimer += dt;
         if (this.createCarTimer >= this.createCarInterval && this.queueCars.length < GameConst.MAX_CAR) {
             let startNode = find('stage01_cocos/DrivePath/PathStart', this.sceneNode);
             if (!startNode) {
-                // console.log("startNode is null")
+
                 return;
             }
             let deskCount = this.map.getOpenDeskCount()
@@ -201,13 +201,13 @@ export class GameManager extends BaseComponent {
 
     checkCreateDeliveryDriver(dt: number) {
         if (!this.map) return;
-        if (Global.game.map.getOpenDeskCount() < 5) return;//第五张桌子
+        if (Global.game.map.getOpenDeskCount() < 5) return;
 
         this.createDeliveryDriverTimer += dt;
         if (this.createDeliveryDriverTimer >= this.createDeliveryDriverInterval && !this.deliveryDriver) {
             let startNode = find('stage01_cocos/DeliveryCustomerPath/PathStart_2', this.sceneNode)
             if (!startNode) {
-                // console.log("startNode is null")
+
                 return;
             }
             this.createDeliveryDriver(0, startNode.position.clone());
@@ -230,7 +230,7 @@ export class GameManager extends BaseComponent {
         loadingui.node.destroy();
     }
     loadRes() {
-        //预加载下汉堡和顾客资源
+
         return new Promise(async (resolve, reject) => {
             let burger: any = await ResHelper.loadResSync('entity/Burger', 'prefabs', Prefab)
             AssetPool.Instance().addPrefab(burger, 'Burger');
@@ -276,10 +276,10 @@ export class GameManager extends BaseComponent {
             else
                 customerComp.run(this.queueCustomers[this.queueCustomers.length - 1].queueIndex + 1)
             this.queueCustomers.push(customerComp)
-            // this.customers.push(customerComp)
+
             customerNode.on(GameConst.EventType.Remove, this.onCustomerRemoved, this)
             this.customerID++
-            customerComp.key = 'customer' + this.customerID//用来碰撞检测，enter,exit,stay
+            customerComp.key = 'customer' + this.customerID
             resolve(null)
         })
 
@@ -298,7 +298,7 @@ export class GameManager extends BaseComponent {
         })
     }
 
-    //外卖
+
     createDeliveryDriver(type: number, bornPos: Vec3) {
         return new Promise(async (resolve, reject) => {
             let node: Node = await AssetPool.Instance().createObjAsync('entity/DeliveryDriver', 'DeliveryDriver');
@@ -342,7 +342,7 @@ export class GameManager extends BaseComponent {
             resolve(null)
         })
     }
-    //创建普通员工，全场帮忙那种
+
     createNormalStaff(pos: Vec3, index: number) {
         console.log('创建普通员工');
         return new Promise(async (resolve, reject) => {
@@ -385,7 +385,7 @@ export class GameManager extends BaseComponent {
             }
         }
 
-        //重新设置顾客的index
+
         this.resetCustomerQueue()
     }
     removeCustomerFromEatting(customer: Customer) {
@@ -407,7 +407,7 @@ export class GameManager extends BaseComponent {
             }
         }
     }
-    //获取捣乱顾客所在索引
+
     getCallingCustomerIndex() {
         let customer = this.queueCustomers.find(c => c.isCalling())
         if (customer)
@@ -466,7 +466,7 @@ export class GameManager extends BaseComponent {
         }
         return null
     }
-    //检查条件是否满足,工人好做动作
+
     checkConditions(conditions: number[]) {
         let bol = false
         for (const cType of conditions) {
@@ -486,7 +486,7 @@ export class GameManager extends BaseComponent {
         }
         return bol
     }
-    //获取当前点餐的顾客
+
     getFirstQueueCustomer() {
         for (const customer of this.queueCustomers) {
             if (customer.getAction() == CUSTOMER_ACTION.ORDING) {
@@ -495,7 +495,7 @@ export class GameManager extends BaseComponent {
         }
         return null
     }
-    //获取当前点餐的车
+
     getFirstQueueCar() {
         for (const car of this.queueCars) {
             if (car.isOrding()) {
@@ -506,7 +506,7 @@ export class GameManager extends BaseComponent {
     }
 
 
-    //检测是否显示 buff
+
     private lastBoostTime: number = 0;
     checkBoost(dt: number) {
         if (Model.game.guideID < 12) return;
@@ -526,7 +526,7 @@ export class GameManager extends BaseComponent {
         let hasPinghengche = Model.game.hasPingHengChe();
 
 
-        //场景中是否有对应的buff没有拾取
+
         parent.getComponentsInChildren(BoostItem).forEach(a => {
             if (a.type == BOOST_TYPE.BOOST_INLINESKATE_BLUE || a.type == BOOST_TYPE.BOOST_INLINESKATE_PINK) {
                 hasSkate = true;
@@ -550,7 +550,7 @@ export class GameManager extends BaseComponent {
         }
     }
 
-    //手动调用，每次玩家用钱出现钱不够  就近创建一个
+
     private _lastcreateMoneyBoostTime: number = 0;
     private async _createMoneyItem() {
         if (!this.map) return;
@@ -567,14 +567,14 @@ export class GameManager extends BaseComponent {
         let boostItem = item.getComponent(BoostItem);
         boostItem.setType(BOOST_TYPE.MONEY);
     }
-    //创建初始金钱
+
     createInitMoney() {
         let moneyArea = this.map.GetGameObject('StageObjects').getChildByName('MoneyArea');
         moneyArea.getComponent(InitMoneyArea).createInitMoney()
     }
 
 
-    //聚焦大门动画
+
     focusToDoor() {
         console.log('do ani -----------------------')
         Global.player.pauseMove = true;
@@ -593,7 +593,7 @@ export class GameManager extends BaseComponent {
         })
 
     }
-    //播放主角金钱增加减少动画
+
     async playMoneyAni(startPos: Vec3, endPos: Vec3, count: number = 8) {
         for (let i = 0; i < count; i++) {
             let item = await AssetPool.Instance().createObjAsync('entity/Money', 'Money');
@@ -643,7 +643,7 @@ export class GameManager extends BaseComponent {
         })
         Global.camera.node.getComponentInChildren(Camera).convertToUINode(v3_0, this.uiNode, v3_0);
         ui.setPosition(v3_0.add(v3(0, 100)))
-        //异步创建之后可能已经关闭了
+
         if (!this.isCountDown) {
             this.removeCountDownUI()
         }

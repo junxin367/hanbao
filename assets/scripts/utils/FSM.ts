@@ -81,17 +81,17 @@ export default class FSM extends Component {
     changeState(e: number, force: boolean = false): void {
         let t = this.states[e];
         if (t == null) {
-            // console.warn(
-            //     '[FSM] invalid state for stateId: ' +
-            //     e +
-            //     ' of : ' +
-            //     this._target.__classname__
-            // );
+
+
+
+
+
+
             this.curr?.onExit && this.curr?.onExit.call(this.curr.thisObj);
             this.prev = this.curr;
             this.curr = null;
         } else {
-            // if (!this.curr) return;
+
             if (this.curr && this.curr.id == e && !force) return;
             this.timeElapsed = 0;
             this.curr?.onExit && this.curr?.onExit.call(this.curr.thisObj);

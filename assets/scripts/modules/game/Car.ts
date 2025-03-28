@@ -115,7 +115,7 @@ export class Car extends BaseComponent {
     }
     onLeavingEnter() {
         this.node.emit(GameConst.EventType.Remove, this)
-        //计算要移动到的位置todo
+
         let endNode = Global.game.map.getNodeByName('DrivePath').getChildByName('Path3')
         let path = [this.node.worldPosition.clone(), endNode.worldPosition.clone()];
         if (path.length > 0) {
@@ -131,7 +131,7 @@ export class Car extends BaseComponent {
     }
     shiftInQueue(index: number) {
         this.queueIndex = index
-        this.fsm.changeState(CAR_ACTION.GOTO_COUNTER, true)//强制切换状态
+        this.fsm.changeState(CAR_ACTION.GOTO_COUNTER, true)
     }
     goto(path: Vec3[], callback: Function = null, updateFunc: Function = null) {
         this.moveEngine.speed = 2
@@ -148,8 +148,8 @@ export class Car extends BaseComponent {
             warn('car不是点餐状态，错误')
             return
         }
-        //做动画todo
-        //AssetPool.Instance().put(item)
+
+
         this.ownFood++
 
         Global.game.flyTo(item, this.node, this.node.worldPosition.clone(), 0.25, () => {

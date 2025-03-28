@@ -49,7 +49,7 @@ export class BoostWin extends BasePanel {
                 }
             })
         } else if (name == "btn_free") {
-            //平衡车
+
             Model.game.boost[this.type] = BOOST_TIME;
             Model.save();
             this.close(true);

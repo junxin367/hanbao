@@ -6,7 +6,7 @@ const { ccclass, property } = _decorator;
 export class CountDownUI extends BaseComponent {
     sp_bar: Sprite
     start() {
-      //  this.node.angle = 90
+
     }
 
     update(deltaTime: number) {

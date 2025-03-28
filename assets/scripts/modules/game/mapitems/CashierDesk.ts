@@ -68,7 +68,7 @@ export class CashierDesk extends MapItemBase {
 
     }
     async onInit() {
-        //已经解锁了收银员
+
         this.onUpgrade();
         await this.initMoney();
         this.loadMoney()

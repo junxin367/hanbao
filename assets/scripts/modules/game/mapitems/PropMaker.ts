@@ -11,18 +11,18 @@ import { Item } from './Item';
 import { MapItemBase, } from './MapItemBase';
 const { ccclass, property } = _decorator;
 enum PROPMAKER_ACTION {
-    IDLE = 1,//空闲中，当满了的时候
+    IDLE = 1,
     WORKING = 2,
 }
-//buger
+
 @ccclass('PropMaker')
 export class PropMaker extends MapItemBase {
     private fsm: FSM
     private ani: SkeletalAnimation
-    //机器属性,生产效率,最大数量,生产的物品数量
+
     private prop: { lv: number, max: number, speed: number }
 
-    itemPlaceNode: Node = null;//物品放置处
+    itemPlaceNode: Node = null;
     private maxNode: Node = null;
 
     private pattyOrgPos: Vec3[]
@@ -46,7 +46,7 @@ export class PropMaker extends MapItemBase {
         }
     }
     onInit() {
-        //读取数据
+
         if (this.unlock) {
             let lv = Model.game.mapItemLv[this.cfg.Id + '_up'] || 0
             let info = Model.game.getBurgerMachineInfo(lv + 1)
@@ -114,7 +114,7 @@ export class PropMaker extends MapItemBase {
         this.fsm.changeState(PROPMAKER_ACTION.IDLE)
 
     }
-    //更新生产出的物品信息
+
     async addOne() {
         let idx = this.itemPlaceNode.children.length
         let item = await AssetPool.Instance().createObjAsync('entity/Burger', 'Burger');
@@ -133,7 +133,7 @@ export class PropMaker extends MapItemBase {
             item.position = v3(0, Math.floor(i / 2) * 0.3, i % 2 == 0 ? -0.3 : 0.3)
         }
     }
-    //播放工作时候的动画
+
     playAni() {
         let objs = ['patty', 'patty1', 'patty2']
         for (let i = 0; i < objs.length; i++) {
@@ -151,7 +151,7 @@ export class PropMaker extends MapItemBase {
             this.GetGameObject(objs[i]).setPosition(p.clone())
         }
     }
-    //从上面拿一个
+
     reduceOne() {
         if (this.stackList.length > 0) {
             let item = this.stackList.pop()

@@ -1,10 +1,10 @@
 
-//本地版本号
+
 export const LocalVersion = '2.0.1';
-//远程配置
-export const NetControlUrl = 'https://game-1253296427.cos.ap-chengdu.myqcloud.com/cct/game_7.json?a=' + Math.random();
-export const NetControlUrlTT = 'https://game-1253296427.cos.ap-chengdu.myqcloud.com/cct/game_8.json?a=' + Math.random();
-//配置
+
+export const NetControlUrl = 'https:
+export const NetControlUrlTT = 'https:
+
 export var DefaultTemplete = {
 
     "appid": "",

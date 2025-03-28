@@ -35,7 +35,7 @@ export class Robot extends Role {
         this.fsm.addState(new FSMAction(this, ROBOT_ACTION.BACK, this.onBackEnter, this.onBackUpdate))
     }
     start() {
-        //test
+
         this.fsm.changeState(ROBOT_ACTION.IDLE)
     }
 

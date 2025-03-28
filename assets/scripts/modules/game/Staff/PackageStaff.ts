@@ -4,7 +4,7 @@ import { PackageTable } from '../mapitems/PackageTable';
 import { BaseStaff, STAFF_ACTION } from './BaseStaff';
 
 const { ccclass, property } = _decorator;
-//打包的员工
+
 @ccclass('PackageStaff')
 export class PackageStaff extends BaseStaff {
     aidTime: number = 0

@@ -29,7 +29,7 @@
              */
 
 
-            // -------------------------------------------------------------------------Node
+
 
             /**
              * Advancing front node
@@ -55,7 +55,7 @@
                 this.value = p.x;
             };
 
-            // ---------------------------------------------------------------AdvancingFront
+
             /**
              * @constructor
              * @private
@@ -104,7 +104,7 @@
 
             /** @return {Node} */
             AdvancingFront.prototype.findSearchNode = function (/*x*/) {
-                // TODO: implement BST index
+
                 return this.search_node_;
             };
 
@@ -144,9 +144,9 @@
                 var nx = node.point.x;
 
                 if (px === nx) {
-                    // Here we are comparing point references, not values
+
                     if (point !== node.point) {
-                        // We might have two nodes with same x value for a short time
+
                         if (point === node.prev.point) {
                             node = node.prev;
                         } else if (point === node.next.point) {
@@ -177,7 +177,7 @@
             };
 
 
-            // ----------------------------------------------------------------------Exports
+
 
             module.exports = AdvancingFront;
             module.exports.Node = Node;
@@ -244,7 +244,7 @@
 
             var xy = require('./xy');
 
-            // ------------------------------------------------------------------------Point
+
             /**
              * Construct a point
              * @example
@@ -267,8 +267,8 @@
                  */
                 this.y = +y || 0;
 
-                // All extra fields added to Point are prefixed with _p2t_
-                // to avoid collisions if custom Point class is used.
+
+
 
                 /**
                  * The edges this point constitutes an upper ending point
@@ -401,7 +401,7 @@
             };
 
 
-            // -----------------------------------------------------Point ("static" methods)
+
 
             /**
              * Negate a point component-wise and return the result as a new Point object.
@@ -468,7 +468,7 @@
             };
 
 
-            // -----------------------------------------------------------------"Point-Like"
+
             /*
              * The following functions operate on "Point" or any "Point like" object 
              * with {x,y} (duck typing).
@@ -491,7 +491,7 @@
             };
 
 
-            // ---------------------------------------------------------Exports (public API)
+
 
             module.exports = Point;
 
@@ -612,7 +612,7 @@
                  * @public
                  * @return {module:poly2tri} instance called
                  */
-                // (this feature is not automatically provided by browserify).
+
                 exports.noConflict = function () {
                     global.poly2tri = previousPoly2tri;
                     return exports;
@@ -655,7 +655,7 @@
                 exports.SweepContext = require('./sweepcontext');
 
 
-                // Backward compatibility
+
                 var sweep = require('./sweep');
                 /**
                  * @function
@@ -708,7 +708,7 @@
             var Node = require('./advancingfront').Node;
 
 
-            // ------------------------------------------------------------------------utils
+
 
             var utils = require('./utils');
 
@@ -725,7 +725,7 @@
             var isAngleObtuse = utils.isAngleObtuse;
 
 
-            // ------------------------------------------------------------------------Sweep
+
 
             /**
              * Triangulate the polygon with holes and Steiner points.
@@ -736,9 +736,9 @@
             function triangulate(tcx) {
                 tcx.initTriangulation();
                 tcx.createAdvancingFront();
-                // Sweep points; build mesh
+
                 sweepPoints(tcx);
-                // Clean up
+
                 finalizationPolygon(tcx);
             }
 
@@ -762,14 +762,14 @@
              * @param {!SweepContext} tcx - SweepContext object
              */
             function finalizationPolygon(tcx) {
-                // Get an Internal triangle to start with
+
                 var t = tcx.front().head().next.triangle;
                 var p = tcx.front().head().next.point;
                 while (!t.getConstrainedEdgeCW(p)) {
                     t = t.neighborCCW(p);
                 }
 
-                // Collect interior triangles constrained by edges
+
                 tcx.meshClean(t);
             }
 
@@ -784,13 +784,13 @@
                 var node = tcx.locateNode(point);
                 var new_node = newFrontTriangle(tcx, point, node);
 
-                // Only need to check +epsilon since point never have smaller
-                // x value than node due to how we fetch nodes from the front
+
+
                 if (point.x <= node.point.x + (EPSILON)) {
                     fill(tcx, node);
                 }
 
-                //tcx.AddNode(new_node);
+
 
                 fillAdvancingFront(tcx, new_node);
                 return new_node;
@@ -804,9 +804,9 @@
                     return;
                 }
 
-                // For now we will do all needed filling
-                // TODO: integrate with flip process might give some better performance
-                //       but for now this avoid the issue with cases that needs both flips and fills
+
+
+
                 fillEdgeEvent(tcx, edge, node);
                 edgeEventByPoints(tcx, edge.p, edge.q, node.triangle, edge.q);
             }
@@ -819,22 +819,22 @@
                 var p1 = triangle.pointCCW(point);
                 var o1 = orient2d(eq, p1, ep);
                 if (o1 === Orientation.COLLINEAR) {
-                    // TODO integrate here changes from C++ version
-                    // (C++ repo revision 09880a869095 dated March 8, 2011)
+
+
                     throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p1, ep]);
                 }
 
                 var p2 = triangle.pointCW(point);
                 var o2 = orient2d(eq, p2, ep);
                 if (o2 === Orientation.COLLINEAR) {
-                    // TODO integrate here changes from C++ version
-                    // (C++ repo revision 09880a869095 dated March 8, 2011)
+
+
                     throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p2, ep]);
                 }
 
                 if (o1 === o2) {
-                    // Need to decide if we are rotating CW or CCW to get to a triangle
-                    // that will cross edge
+
+
                     if (o1 === Orientation.CW) {
                         triangle = triangle.neighborCCW(point);
                     } else {
@@ -842,7 +842,7 @@
                     }
                     edgeEventByPoints(tcx, ep, eq, triangle, point);
                 } else {
-                    // This triangle crosses constraint so lets flippin start!
+
                     flipEdgeEvent(tcx, ep, eq, triangle, point);
                 }
             }
@@ -891,24 +891,24 @@
             function fill(tcx, node) {
                 var triangle = new Triangle(node.prev.point, node.point, node.next.point);
 
-                // TODO: should copy the constrained_edge value from neighbor triangles
-                //       for now constrained_edge values are copied during the legalize
+
+
                 triangle.markNeighbor(node.prev.triangle);
                 triangle.markNeighbor(node.triangle);
 
                 tcx.addToMap(triangle);
 
-                // Update the advancing front
+
                 node.prev.next = node.next;
                 node.next.prev = node.prev;
 
 
-                // If it was legalized the triangle has already been mapped
+
                 if (!legalize(tcx, triangle)) {
                     tcx.mapTriangleToNodes(triangle);
                 }
 
-                //tcx.removeNode(node);
+
             }
 
             /**
@@ -916,11 +916,11 @@
              * @param {!SweepContext} tcx - SweepContext object
              */
             function fillAdvancingFront(tcx, n) {
-                // Fill right holes
+
                 var node = n.next;
                 while (node.next) {
-                    // TODO integrate here changes from C++ version
-                    // (C++ repo revision acf81f1f1764 dated April 7, 2012)
+
+
                     if (isAngleObtuse(node.point, node.next.point, node.prev.point)) {
                         break;
                     }
@@ -928,11 +928,11 @@
                     node = node.next;
                 }
 
-                // Fill left holes
+
                 node = n.prev;
                 while (node.prev) {
-                    // TODO integrate here changes from C++ version
-                    // (C++ repo revision acf81f1f1764 dated April 7, 2012)
+
+
                     if (isAngleObtuse(node.point, node.next.point, node.prev.point)) {
                         break;
                     }
@@ -940,7 +940,7 @@
                     node = node.prev;
                 }
 
-                // Fill right basins
+
                 if (n.next && n.next.next) {
                     if (isBasinAngleRight(n)) {
                         fillBasin(tcx, n);
@@ -966,8 +966,8 @@
              * @return {boolean}
              */
             function legalize(tcx, t) {
-                // To legalize a triangle we start by finding if any of the three edges
-                // violate the Delaunay condition
+
+
                 for (var i = 0; i < 3; ++i) {
                     if (t.delaunay_edge[i]) {
                         continue;
@@ -978,8 +978,8 @@
                         var op = ot.oppositePoint(t, p);
                         var oi = ot.index(op);
 
-                        // If this is a Constrained Edge or a Delaunay Edge(only during recursive legalization)
-                        // then we should not try to legalize
+
+
                         if (ot.constrained_edge[oi] || ot.delaunay_edge[oi]) {
                             t.constrained_edge[i] = ot.constrained_edge[oi];
                             continue;
@@ -987,17 +987,17 @@
 
                         var inside = inCircle(p, t.pointCCW(p), t.pointCW(p), op);
                         if (inside) {
-                            // Lets mark this shared edge as Delaunay
+
                             t.delaunay_edge[i] = true;
                             ot.delaunay_edge[oi] = true;
 
-                            // Lets rotate shared edge one vertex CW to legalize it
+
                             rotateTrianglePair(t, p, ot, op);
 
-                            // We now got one valid Delaunay Edge shared by two triangles
-                            // This gives us 4 new edges to check for Delaunay
 
-                            // Make sure that triangle to node mapping is done only one time for a specific triangle
+
+
+
                             var not_legalized = !legalize(tcx, t);
                             if (not_legalized) {
                                 tcx.mapTriangleToNodes(t);
@@ -1007,15 +1007,15 @@
                             if (not_legalized) {
                                 tcx.mapTriangleToNodes(ot);
                             }
-                            // Reset the Delaunay edges, since they only are valid Delaunay edges
-                            // until we add a new triangle or point.
-                            // XXX: need to think about this. Can these edges be tried after we
-                            //      return to previous recursive level?
+
+
+
+
                             t.delaunay_edge[i] = false;
                             ot.delaunay_edge[oi] = false;
 
-                            // If triangle have been legalized no need to check the other edges since
-                            // the recursive legalization will handles those so we can end here.
+
+
                             return true;
                         }
                     }
@@ -1117,23 +1117,23 @@
                 t.legalize(p, op);
                 ot.legalize(op, p);
 
-                // Remap delaunay_edge
+
                 ot.setDelaunayEdgeCCW(p, de1);
                 t.setDelaunayEdgeCW(p, de2);
                 t.setDelaunayEdgeCCW(op, de3);
                 ot.setDelaunayEdgeCW(op, de4);
 
-                // Remap constrained_edge
+
                 ot.setConstrainedEdgeCCW(p, ce1);
                 t.setConstrainedEdgeCW(p, ce2);
                 t.setConstrainedEdgeCCW(op, ce3);
                 ot.setConstrainedEdgeCW(op, ce4);
 
-                // Remap neighbors
-                // XXX: might optimize the markNeighbor by keeping track of
-                //      what side should be assigned to what neighbor after the
-                //      rotation. Now mark neighbor does lots of testing to find
-                //      the right side.
+
+
+
+
+
                 t.clearNeighbors();
                 ot.clearNeighbors();
                 if (n1) {
@@ -1167,13 +1167,13 @@
                     tcx.basin.left_node = node.next;
                 }
 
-                // Find the bottom and right node
+
                 tcx.basin.bottom_node = tcx.basin.left_node;
                 while (tcx.basin.bottom_node.next && tcx.basin.bottom_node.point.y >= tcx.basin.bottom_node.next.point.y) {
                     tcx.basin.bottom_node = tcx.basin.bottom_node.next;
                 }
                 if (tcx.basin.bottom_node === tcx.basin.left_node) {
-                    // No valid basin
+
                     return;
                 }
 
@@ -1182,7 +1182,7 @@
                     tcx.basin.right_node = tcx.basin.right_node.next;
                 }
                 if (tcx.basin.right_node === tcx.basin.bottom_node) {
-                    // No valid basins
+
                     return;
                 }
 
@@ -1199,7 +1199,7 @@
              * @param node - bottom_node
              */
             function fillBasinReq(tcx, node) {
-                // if shallow stop filling
+
                 if (isShallow(tcx, node)) {
                     return;
                 }
@@ -1222,7 +1222,7 @@
                     }
                     node = node.prev;
                 } else {
-                    // Continue with the neighbor node with lowest Y value
+
                     if (node.prev.point.y < node.next.point.y) {
                         node = node.prev;
                     } else {
@@ -1241,7 +1241,7 @@
                     height = tcx.basin.right_node.point.y - node.point.y;
                 }
 
-                // if shallow stop filling
+
                 if (tcx.basin.width > height) {
                     return true;
                 }
@@ -1258,7 +1258,7 @@
 
             function fillRightAboveEdgeEvent(tcx, edge, node) {
                 while (node.next.point.x < edge.p.x) {
-                    // Check if next node is below the edge
+
                     if (orient2d(edge.q, node.next.point, edge.p) === Orientation.CCW) {
                         fillRightBelowEdgeEvent(tcx, edge, node);
                     } else {
@@ -1270,12 +1270,12 @@
             function fillRightBelowEdgeEvent(tcx, edge, node) {
                 if (node.point.x < edge.p.x) {
                     if (orient2d(node.point, node.next.point, node.next.next.point) === Orientation.CCW) {
-                        // Concave
+
                         fillRightConcaveEdgeEvent(tcx, edge, node);
                     } else {
-                        // Convex
+
                         fillRightConvexEdgeEvent(tcx, edge, node);
-                        // Retry this one
+
                         fillRightBelowEdgeEvent(tcx, edge, node);
                     }
                 }
@@ -1284,14 +1284,14 @@
             function fillRightConcaveEdgeEvent(tcx, edge, node) {
                 fill(tcx, node.next);
                 if (node.next.point !== edge.p) {
-                    // Next above or below edge?
+
                     if (orient2d(edge.q, node.next.point, edge.p) === Orientation.CCW) {
-                        // Below
+
                         if (orient2d(node.point, node.next.point, node.next.next.point) === Orientation.CCW) {
-                            // Next is concave
+
                             fillRightConcaveEdgeEvent(tcx, edge, node);
                         } else {
-                            // Next is convex
+
                             /* jshint noempty:false */
                         }
                     }
@@ -1299,18 +1299,18 @@
             }
 
             function fillRightConvexEdgeEvent(tcx, edge, node) {
-                // Next concave or convex?
+
                 if (orient2d(node.next.point, node.next.next.point, node.next.next.next.point) === Orientation.CCW) {
-                    // Concave
+
                     fillRightConcaveEdgeEvent(tcx, edge, node.next);
                 } else {
-                    // Convex
-                    // Next above or below edge?
+
+
                     if (orient2d(edge.q, node.next.next.point, edge.p) === Orientation.CCW) {
-                        // Below
+
                         fillRightConvexEdgeEvent(tcx, edge, node.next);
                     } else {
-                        // Above
+
                         /* jshint noempty:false */
                     }
                 }
@@ -1318,7 +1318,7 @@
 
             function fillLeftAboveEdgeEvent(tcx, edge, node) {
                 while (node.prev.point.x > edge.p.x) {
-                    // Check if next node is below the edge
+
                     if (orient2d(edge.q, node.prev.point, edge.p) === Orientation.CW) {
                         fillLeftBelowEdgeEvent(tcx, edge, node);
                     } else {
@@ -1330,30 +1330,30 @@
             function fillLeftBelowEdgeEvent(tcx, edge, node) {
                 if (node.point.x > edge.p.x) {
                     if (orient2d(node.point, node.prev.point, node.prev.prev.point) === Orientation.CW) {
-                        // Concave
+
                         fillLeftConcaveEdgeEvent(tcx, edge, node);
                     } else {
-                        // Convex
+
                         fillLeftConvexEdgeEvent(tcx, edge, node);
-                        // Retry this one
+
                         fillLeftBelowEdgeEvent(tcx, edge, node);
                     }
                 }
             }
 
             function fillLeftConvexEdgeEvent(tcx, edge, node) {
-                // Next concave or convex?
+
                 if (orient2d(node.prev.point, node.prev.prev.point, node.prev.prev.prev.point) === Orientation.CW) {
-                    // Concave
+
                     fillLeftConcaveEdgeEvent(tcx, edge, node.prev);
                 } else {
-                    // Convex
-                    // Next above or below edge?
+
+
                     if (orient2d(edge.q, node.prev.prev.point, edge.p) === Orientation.CW) {
-                        // Below
+
                         fillLeftConvexEdgeEvent(tcx, edge, node.prev);
                     } else {
-                        // Above
+
                         /* jshint noempty:false */
                     }
                 }
@@ -1362,14 +1362,14 @@
             function fillLeftConcaveEdgeEvent(tcx, edge, node) {
                 fill(tcx, node.prev);
                 if (node.prev.point !== edge.p) {
-                    // Next above or below edge?
+
                     if (orient2d(edge.q, node.prev.point, edge.p) === Orientation.CW) {
-                        // Below
+
                         if (orient2d(node.point, node.prev.point, node.prev.prev.point) === Orientation.CW) {
-                            // Next is concave
+
                             fillLeftConcaveEdgeEvent(tcx, edge, node);
                         } else {
-                            // Next is convex
+
                             /* jshint noempty:false */
                         }
                     }
@@ -1382,7 +1382,7 @@
 
                 var op = ot.oppositePoint(t, p);
 
-                // Additional check from Java version (see issue #88)
+
                 if (t.getConstrainedEdgeAcross(p)) {
                     var index = t.index(p);
                     throw new PointError("poly2tri Intersecting Constraints",
@@ -1390,16 +1390,16 @@
                 }
 
                 if (inScanArea(p, t.pointCCW(p), t.pointCW(p), op)) {
-                    // Lets rotate shared edge one vertex CW
+
                     rotateTrianglePair(t, p, ot, op);
                     tcx.mapTriangleToNodes(t);
                     tcx.mapTriangleToNodes(ot);
 
-                    // XXX: in the original C++ code for the next 2 lines, we are
-                    // comparing point values (and not pointers). In this JavaScript
-                    // code, we are comparing point references (pointers). This works
-                    // because we can't have 2 different points with the same values.
-                    // But to be really equivalent, we should use "Point.equals" here.
+
+
+
+
+
                     if (p === eq && op === ep) {
                         if (eq === tcx.edge_event.constrained_edge.q && ep === tcx.edge_event.constrained_edge.p) {
                             t.markConstrainedEdgeByPoints(ep, eq);
@@ -1407,7 +1407,7 @@
                             legalize(tcx, t);
                             legalize(tcx, ot);
                         } else {
-                            // XXX: I think one of the triangles should be legalized here?
+
                             /* jshint noempty:false */
                         }
                     } else {
@@ -1437,7 +1437,7 @@
             function nextFlipTriangle(tcx, o, t, ot, p, op) {
                 var edge_index;
                 if (o === Orientation.CCW) {
-                    // ot is not crossing edge after flip
+
                     edge_index = ot.edgeIndex(p, op);
                     ot.delaunay_edge[edge_index] = true;
                     legalize(tcx, ot);
@@ -1445,7 +1445,7 @@
                     return t;
                 }
 
-                // t is not crossing edge after flip
+
                 edge_index = t.edgeIndex(p, op);
 
                 t.delaunay_edge[edge_index] = true;
@@ -1462,10 +1462,10 @@
             function nextFlipPoint(ep, eq, ot, op) {
                 var o2d = orient2d(eq, op, ep);
                 if (o2d === Orientation.CW) {
-                    // Right
+
                     return ot.pointCCW(op);
                 } else if (o2d === Orientation.CCW) {
-                    // Left
+
                     return ot.pointCW(op);
                 } else {
                     throw new PointError("poly2tri [Unsupported] nextFlipPoint: opposing point on constrained edge!", [eq, op, ep]);
@@ -1492,7 +1492,7 @@
                 var op = ot.oppositePoint(t, p);
 
                 if (inScanArea(eq, flip_triangle.pointCCW(eq), flip_triangle.pointCW(eq), op)) {
-                    // flip with new edge op.eq
+
                     flipEdgeEvent(tcx, eq, op, ot, op);
                 } else {
                     var newP = nextFlipPoint(ep, eq, ot, op);
@@ -1501,7 +1501,7 @@
             }
 
 
-            // ----------------------------------------------------------------------Exports
+
 
             exports.triangulate = triangulate;
 
@@ -1539,7 +1539,7 @@
             var Node = AdvancingFront.Node;
 
 
-            // ------------------------------------------------------------------------utils
+
 
             /**
              * Initial triangle factor, seed triangle will extend 30% of
@@ -1550,7 +1550,7 @@
             var kAlpha = 0.3;
 
 
-            // -------------------------------------------------------------------------Edge
+
             /**
              * Represents a simple polygon's edge
              * @constructor
@@ -1583,7 +1583,7 @@
             };
 
 
-            // ------------------------------------------------------------------------Basin
+
             /**
              * @constructor
              * @struct
@@ -1610,7 +1610,7 @@
                 this.left_highest = false;
             };
 
-            // --------------------------------------------------------------------EdgeEvent
+
             /**
              * @constructor
              * @struct
@@ -1623,7 +1623,7 @@
                 this.right = false;
             };
 
-            // ----------------------------------------------------SweepContext (public API)
+
             /**
              * SweepContext constructor option
              * @typedef {Object} SweepContextOptions
@@ -1662,8 +1662,8 @@
                 this.points_ = (options.cloneArrays ? contour.slice(0) : contour);
                 this.edge_list = [];
 
-                // Bounding box of all points. Computed at the start of the triangulation, 
-                // it is stored in case it is needed by the caller.
+
+
                 this.pmin_ = this.pmax_ = null;
 
                 /**
@@ -1762,7 +1762,7 @@
              * @public
              * @param {Array.<Array.<XY>>} holes - array of array of "Point like" objects with {x,y}
              */
-            // Method added in the JavaScript version (was not present in the c++ version)
+
             SweepContext.prototype.addHoles = function (holes) {
                 var i, len = holes.length;
                 for (i = 0; i < len; i++) {
@@ -1814,7 +1814,7 @@
              * @public
              * @param {Array.<XY>} points - array of "Point like" object with {x,y}
              */
-            // Method added in the JavaScript version (was not present in the c++ version)
+
             SweepContext.prototype.addPoints = function (points) {
                 this.points_ = this.points_.concat(points);
                 return this; // for chaining
@@ -1830,8 +1830,8 @@
              *      var triangles = swctx.getTriangles();
              * @public
              */
-            // Shortcut method for sweep.triangulate(SweepContext).
-            // Method added in the JavaScript version (was not present in the c++ version)
+
+
             SweepContext.prototype.triangulate = function () {
                 sweep.triangulate(this);
                 return this; // for chaining
@@ -1845,7 +1845,7 @@
              * @public
              * @returns {{min:Point,max:Point}} object with 'min' and 'max' Point
              */
-            // Method added in the JavaScript version (was not present in the c++ version)
+
             SweepContext.prototype.getBoundingBox = function () {
                 return { min: this.pmin_, max: this.pmax_ };
             };
@@ -1881,7 +1881,7 @@
             SweepContext.prototype.GetTriangles = SweepContext.prototype.getTriangles;
 
 
-            // ---------------------------------------------------SweepContext (private API)
+
 
             /** @private */
             SweepContext.prototype.front = function () {
@@ -1925,7 +1925,7 @@
                 var ymax = this.points_[0].y;
                 var ymin = this.points_[0].y;
 
-                // Calculate bounds
+
                 var i, len = this.points_.length;
                 for (i = 1; i < len; i++) {
                     var p = this.points_[i];
@@ -1943,7 +1943,7 @@
                 this.head_ = new Point(xmax + dx, ymin - dy);
                 this.tail_ = new Point(xmin - dx, ymin - dy);
 
-                // Sort points along y-axis
+
                 this.points_.sort(Point.compare);
             };
 
@@ -1975,7 +1975,7 @@
                 var head;
                 var middle;
                 var tail;
-                // Initial triangle
+
                 var triangle = new Triangle(this.points_[0], this.tail_, this.head_);
 
                 this.map_.push(triangle);
@@ -1994,7 +1994,7 @@
 
             /** @private */
             SweepContext.prototype.removeNode = function (node) {
-                // do nothing
+
                 /* jshint unused:false */
             };
 
@@ -2027,8 +2027,8 @@
              * @param {Triangle} triangle start
              */
             SweepContext.prototype.meshClean = function (triangle) {
-                // New implementation avoids recursive calls and use a loop instead.
-                // Cf. issues # 57, 65 and 69.
+
+
                 var triangles = [triangle], t, i;
                 /* jshint boss:true */
                 while (t = triangles.pop()) {
@@ -2044,7 +2044,7 @@
                 }
             };
 
-            // ----------------------------------------------------------------------Exports
+
 
             module.exports = SweepContext;
 
@@ -2077,7 +2077,7 @@
             var xy = require("./xy");
 
 
-            // ---------------------------------------------------------------------Triangle
+
             /**
              * Triangle class.<br>
              * Triangle-based data structures are known to have better performance than
@@ -2170,7 +2170,7 @@
              * @public
              * @return {Array.<XY>}
              */
-            // Method added in the JavaScript version (was not present in the c++ version)
+
             Triangle.prototype.getPoints = function () {
                 return this.points_;
             };
@@ -2194,7 +2194,7 @@
              */
             Triangle.prototype.containsPoint = function (point) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 return (point === points[0] || point === points[1] || point === points[2]);
             };
 
@@ -2250,7 +2250,7 @@
              */
             Triangle.prototype.markNeighborPointers = function (p1, p2, t) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if ((p1 === points[2] && p2 === points[1]) || (p1 === points[1] && p2 === points[2])) {
                     this.neighbors_[0] = t;
                 } else if ((p1 === points[0] && p2 === points[2]) || (p1 === points[2] && p2 === points[0])) {
@@ -2301,7 +2301,7 @@
              */
             Triangle.prototype.pointCW = function (p) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if (p === points[0]) {
                     return points[2];
                 } else if (p === points[1]) {
@@ -2320,7 +2320,7 @@
              */
             Triangle.prototype.pointCCW = function (p) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if (p === points[0]) {
                     return points[1];
                 } else if (p === points[1]) {
@@ -2338,7 +2338,7 @@
              * @param {XY} p - point object with {x,y}
              */
             Triangle.prototype.neighborCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.neighbors_[1];
                 } else if (p === this.points_[1]) {
@@ -2354,7 +2354,7 @@
              * @param {XY} p - point object with {x,y}
              */
             Triangle.prototype.neighborCCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.neighbors_[2];
                 } else if (p === this.points_[1]) {
@@ -2365,7 +2365,7 @@
             };
 
             Triangle.prototype.getConstrainedEdgeCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.constrained_edge[1];
                 } else if (p === this.points_[1]) {
@@ -2376,7 +2376,7 @@
             };
 
             Triangle.prototype.getConstrainedEdgeCCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.constrained_edge[2];
                 } else if (p === this.points_[1]) {
@@ -2386,9 +2386,9 @@
                 }
             };
 
-            // Additional check from Java version (see issue #88)
+
             Triangle.prototype.getConstrainedEdgeAcross = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.constrained_edge[0];
                 } else if (p === this.points_[1]) {
@@ -2399,7 +2399,7 @@
             };
 
             Triangle.prototype.setConstrainedEdgeCW = function (p, ce) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     this.constrained_edge[1] = ce;
                 } else if (p === this.points_[1]) {
@@ -2410,7 +2410,7 @@
             };
 
             Triangle.prototype.setConstrainedEdgeCCW = function (p, ce) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     this.constrained_edge[2] = ce;
                 } else if (p === this.points_[1]) {
@@ -2421,7 +2421,7 @@
             };
 
             Triangle.prototype.getDelaunayEdgeCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.delaunay_edge[1];
                 } else if (p === this.points_[1]) {
@@ -2432,7 +2432,7 @@
             };
 
             Triangle.prototype.getDelaunayEdgeCCW = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.delaunay_edge[2];
                 } else if (p === this.points_[1]) {
@@ -2443,7 +2443,7 @@
             };
 
             Triangle.prototype.setDelaunayEdgeCW = function (p, e) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     this.delaunay_edge[1] = e;
                 } else if (p === this.points_[1]) {
@@ -2454,7 +2454,7 @@
             };
 
             Triangle.prototype.setDelaunayEdgeCCW = function (p, e) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     this.delaunay_edge[2] = e;
                 } else if (p === this.points_[1]) {
@@ -2471,7 +2471,7 @@
              * @returns {Triangle}
              */
             Triangle.prototype.neighborAcross = function (p) {
-                // Here we are comparing point references, not values
+
                 if (p === this.points_[0]) {
                     return this.neighbors_[0];
                 } else if (p === this.points_[1]) {
@@ -2500,7 +2500,7 @@
              */
             Triangle.prototype.legalize = function (opoint, npoint) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if (opoint === points[0]) {
                     points[1] = points[0];
                     points[0] = points[2];
@@ -2528,7 +2528,7 @@
              */
             Triangle.prototype.index = function (p) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if (p === points[0]) {
                     return 0;
                 } else if (p === points[1]) {
@@ -2548,7 +2548,7 @@
              */
             Triangle.prototype.edgeIndex = function (p1, p2) {
                 var points = this.points_;
-                // Here we are comparing point references, not values
+
                 if (p1 === points[0]) {
                     if (p2 === points[1]) {
                         return 2;
@@ -2596,7 +2596,7 @@
              */
             Triangle.prototype.markConstrainedEdgeByPoints = function (p, q) {
                 var points = this.points_;
-                // Here we are comparing point references, not values        
+
                 if ((q === points[0] && p === points[1]) || (q === points[1] && p === points[0])) {
                     this.constrained_edge[2] = true;
                 } else if ((q === points[0] && p === points[2]) || (q === points[2] && p === points[0])) {
@@ -2607,7 +2607,7 @@
             };
 
 
-            // ---------------------------------------------------------Exports (public API)
+
 
             module.exports = Triangle;
 
@@ -2791,7 +2791,7 @@
              * @returns {string} <code>"(x;y)"</code>
              */
             function toString(p) {
-                // Try a custom toString first, and fallback to own implementation if none
+
                 var s = p.toString();
                 return (s === '[object Object]' ? toStringBase(p) : s);
             }

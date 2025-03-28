@@ -84,7 +84,7 @@ export default class Joystick extends Component {
         this._radius = this.ring.getComponent(UITransform).width / 2;
         this._initTouchEvent();
         if (this.joystickType === JoystickType.FOLLOW) {
-            // this.node.opacity = 0;
+
         }
 
         this.defaultpos = this.ring.getPosition().clone();
@@ -173,7 +173,7 @@ export default class Joystick extends Component {
     }
 
     _initTouchEvent() {
-        // set the size of joystick node to control scale
+
         this.node.on(Node.EventType.TOUCH_START, this._touchStartEvent, this);
         this.node.on(Node.EventType.TOUCH_MOVE, this._touchMoveEvent, this);
         this.node.on(Node.EventType.TOUCH_END, this._touchEndEvent, this);
@@ -224,7 +224,7 @@ export default class Joystick extends Component {
 
             speedType = SpeedType.NORMAL;
         } else {
-            // 控杆永远保持在圈内，并在圈内跟随触摸更新角度
+
             const x = this._stickPos.x + p.x * this._radius;
             const y = this._stickPos.y + p.y * this._radius;
             this.dot.setPosition(v3(x, y));

@@ -22,7 +22,7 @@ export class UpgradeWin extends BasePanel {
     lbl_title: Label = null;
     onShow(type: number): void {
         this.lbl_title.string = type == 1 ? "主角升级" : "员工升级";
-        // console.log(Model.game.sceneId)
+
         let list = Utils.objectToArray<Upgrade>(GameData.getUpgrade()).filter(a => a.Sence == Model.game.sceneId && a.Type == type);
         this.node_items.children.forEach((child, i) => {
             let info = list[i];
